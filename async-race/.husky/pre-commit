@@ -1,0 +1,4 @@
+cd async-race
+
+npm run format
+npm run lint:fix
