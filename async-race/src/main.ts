@@ -1,2 +1,2 @@
-import '@csstools/normalize.css'
-import './style.css'
+import '@csstools/normalize.css';
+import './style.css';

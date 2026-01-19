@@ -1,8 +1,8 @@
-import js from '@eslint/js'
-import prettier from 'eslint-config-prettier'
-import pluginPrettier from 'eslint-plugin-prettier'
-import unicorn from 'eslint-plugin-unicorn'
-import tseslint from 'typescript-eslint'
+import js from '@eslint/js';
+import prettier from 'eslint-config-prettier';
+import pluginPrettier from 'eslint-plugin-prettier';
+import unicorn from 'eslint-plugin-unicorn';
+import tseslint from 'typescript-eslint';
 
 export default [
   {
@@ -22,4 +22,4 @@ export default [
       'max-lines-per-function': ['error', { max: 40, skipBlankLines: true, skipComments: true }],
     },
   },
-]
+];
