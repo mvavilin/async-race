@@ -1,27 +1,6 @@
-type Car = {
-  id: number;
-  name: string;
-  color: string;
-};
-
-const BASE_URL = 'http://127.0.0.1:3000';
-
-enum ApiPath {
-  GARAGE = '/garage',
-}
-
-type QueryParam = {
-  key: string;
-  value: number;
-};
-
-const generateQueryString = (queryParams: QueryParam[] = []): string =>
-  queryParams.length
-    ? `?${queryParams.map((queryParam) => `${queryParam.key}=${queryParam.value}`).join('&')}`
-    : '';
-
-const getErrorMessage = (response: Response): string =>
-  `Request failed with HTTP status ${response.status} (${response.statusText})`;
+import { type Car, type QueryParam, ApiPath } from '@types';
+import { BASE_URL } from '@/constants';
+import { generateQueryString, getErrorMessage } from '@utils/api';
 
 export const getCars = async (
   queryParams: QueryParam[] = []
