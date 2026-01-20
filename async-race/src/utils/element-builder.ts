@@ -1,4 +1,4 @@
-import type { ElementBuilderOptions } from '@/types/interfaces';
+import { type ElementBuilderOptions } from '@types';
 
 export default class ElementBuilder {
   private element: HTMLElement;
@@ -24,6 +24,10 @@ export default class ElementBuilder {
 
   public setId(id: string): void {
     this.element.id = id;
+  }
+
+  public getId(): string {
+    return this.element.id;
   }
 
   public addClass(...classNames: NonNullable<ElementBuilderOptions['classes']>): void {
@@ -72,8 +76,8 @@ export default class ElementBuilder {
     this.element.removeEventListener(type, handler, options);
   }
 
-  public addChild(...children: HTMLElement[]): void {
-    children.forEach((child) => this.element.appendChild(child));
+  public addChild(...children: ElementBuilder[]): void {
+    children.forEach((child) => this.element.appendChild(child.getElement()));
   }
 
   public remove(): void {

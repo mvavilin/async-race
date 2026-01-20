@@ -1,0 +1,37 @@
+import { routes } from '@/constants';
+import { NotFoundPage } from '@pages';
+import { RoutePath, type Route } from '@types';
+
+export default class Router {
+  private routes: Route[];
+  private container: HTMLDivElement;
+
+  constructor(containerId = 'app') {
+    const container = document.getElementById(containerId);
+    if (container instanceof HTMLDivElement) {
+      this.container = container;
+      this.routes = routes;
+    } else {
+      throw new Error('App container not found');
+    }
+  }
+
+  public init(): void {
+    window.addEventListener('hashchange', () => this.render());
+    window.addEventListener('load', () => this.render());
+  }
+
+  private render(): void {
+    const hash = window.location.hash || RoutePath.GARAGE;
+    const route = this.routes.find((route) => route.path === hash);
+
+    this.container.innerHTML = '';
+
+    const page = route ? route.component : new NotFoundPage();
+    this.container.appendChild(page.build());
+  }
+
+  public navigate(path: RoutePath): void {
+    window.location.hash = path;
+  }
+}

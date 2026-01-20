@@ -1,3 +1,5 @@
+import ElementBuilder from '@utils/element-builder';
+
 export interface ElementBuilderOptions {
   tag?: keyof HTMLElementTagNameMap;
   id?: string;
@@ -5,7 +7,7 @@ export interface ElementBuilderOptions {
   attributes?: Record<string, string>;
   content?: string;
   event?: ElementBuilderEventOptions;
-  children?: HTMLElement[];
+  children?: ElementBuilder[];
 }
 
 interface ElementBuilderEventOptions {
