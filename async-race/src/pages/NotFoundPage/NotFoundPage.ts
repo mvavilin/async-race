@@ -11,5 +11,5 @@ export default class NotFoundPage extends BasePage {
     this.render();
   }
 
-  public render(): void { }
+  public render(): void {}
 }
