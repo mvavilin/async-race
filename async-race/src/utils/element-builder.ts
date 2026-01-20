@@ -1,6 +1,6 @@
 import type { ElementBuilderOptions } from '@/types/interfaces';
 
-export class ElementBuilder {
+export default class ElementBuilder {
   private element: HTMLElement;
 
   constructor({
