@@ -1,0 +1,6 @@
+@import url('UbuntuFonts.module.css');
+
+body {
+  font-family: 'Ubuntu', sans-serif;
+  font-weight: 400;
+}
