@@ -14,5 +14,5 @@ export type Car = {
 
 export type QueryParam = {
   key: string;
-  value: number;
+  value: string;
 };

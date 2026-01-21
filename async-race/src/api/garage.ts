@@ -1,4 +1,4 @@
-import { type Car, type QueryParam, ApiPath } from '@types';
+import { ApiPath, type QueryParam, type Car } from '@types';
 import { BASE_URL } from '@/constants';
 import { generateQueryString, getErrorMessage } from '@utils/api';
 

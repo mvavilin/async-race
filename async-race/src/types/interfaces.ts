@@ -15,3 +15,9 @@ interface ElementBuilderEventOptions {
   handler: EventListenerOrEventListenerObject;
   options?: boolean | AddEventListenerOptions;
 }
+
+export interface EngineResponse {
+  velocity?: number;
+  distance?: number;
+  success?: boolean;
+}

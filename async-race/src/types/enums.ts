@@ -5,4 +5,5 @@ export enum RoutePath {
 
 export enum ApiPath {
   GARAGE = '/garage',
+  ENGINE = '/engine',
 }
