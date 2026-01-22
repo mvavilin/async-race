@@ -28,8 +28,4 @@ export default class Router {
     const page = route ? route.component : new NotFoundPage();
     this.container.replaceChildren(page.build());
   }
-
-  public navigate(path: RoutePath): void {
-    window.location.hash = path;
-  }
 }

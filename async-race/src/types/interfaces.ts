@@ -1,4 +1,11 @@
 import ElementBuilder from '@utils/element-builder';
+import { type ButtonType, RoutePath } from '@types';
+
+interface EventOptions {
+  type: string;
+  handler: EventListenerOrEventListenerObject;
+  options?: boolean | AddEventListenerOptions;
+}
 
 export interface ElementBuilderOptions {
   tag?: keyof HTMLElementTagNameMap;
@@ -6,18 +13,28 @@ export interface ElementBuilderOptions {
   classes?: string[];
   attributes?: Record<string, string>;
   content?: string;
-  event?: ElementBuilderEventOptions;
+  event?: EventOptions;
   children?: ElementBuilder[];
-}
-
-interface ElementBuilderEventOptions {
-  type: string;
-  handler: EventListenerOrEventListenerObject;
-  options?: boolean | AddEventListenerOptions;
 }
 
 export interface EngineResponse {
   velocity?: number;
   distance?: number;
   success?: boolean;
+}
+
+export interface ButtonBuilderOptions {
+  id?: string;
+  classes?: string[];
+  text?: string;
+  event?: EventOptions;
+  type?: ButtonType;
+  disabled?: boolean;
+}
+
+export interface NavButtonProps {
+  id?: string;
+  classes?: string[];
+  text?: string;
+  route: RoutePath;
 }

@@ -16,3 +16,5 @@ export type QueryParam = {
   key: string;
   value: string;
 };
+
+export type ButtonType = HTMLButtonElement['type'];
