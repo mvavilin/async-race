@@ -25,10 +25,8 @@ export default class Router {
     const hash = window.location.hash || RoutePath.GARAGE;
     const route = this.routes.find((route) => route.path === hash);
 
-    this.container.innerHTML = '';
-
     const page = route ? route.component : new NotFoundPage();
-    this.container.appendChild(page.build());
+    this.container.replaceChildren(page.build());
   }
 
   public navigate(path: RoutePath): void {
