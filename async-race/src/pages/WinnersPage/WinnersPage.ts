@@ -1,6 +1,6 @@
 import { BasePage } from '@pages';
 import ElementBuilder from '@utils/element-builder';
-import NavButton from '@components/NavButton/NavButton';
+import NavButton from '@/components/NavButton';
 import { RoutePath } from '@types';
 
 export default class WinnersPage extends BasePage {

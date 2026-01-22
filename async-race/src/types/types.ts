@@ -18,3 +18,5 @@ export type QueryParam = {
 };
 
 export type ButtonType = HTMLButtonElement['type'];
+
+export type InputType = HTMLInputElement['type'];

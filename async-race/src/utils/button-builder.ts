@@ -6,7 +6,7 @@ export default class ButtonBuilder extends ElementBuilder {
     id = '',
     classes = [],
     text = '',
-    event = { type: 'click', handler: () => { } },
+    event = { type: 'click', handler: () => {} },
     type = 'button',
     disabled = false,
   }: ButtonBuilderOptions = {}) {
@@ -17,7 +17,7 @@ export default class ButtonBuilder extends ElementBuilder {
   }
 
   public setType(type: ButtonType): void {
-    this.getElement().setAttribute('type', type);
+    this.addAttribute({ type });
   }
 
   private disable(): void {
@@ -31,7 +31,7 @@ export default class ButtonBuilder extends ElementBuilder {
   }
 
   public setDisabled(state: boolean): void {
-    if (state) this.disable()
+    if (state) this.disable();
     else this.enable();
   }
 }

@@ -3,8 +3,9 @@ import type {
   EngineResponse,
   ButtonBuilderOptions,
   NavButtonProps,
+  InputBuilderOptions,
 } from '@/types/interfaces';
-import type { Route, Car, QueryParam, ButtonType } from '@/types/types';
+import type { Route, Car, QueryParam, ButtonType, InputType } from '@/types/types';
 import { RoutePath, ApiPath } from '@/types/enums';
 
 export type {
@@ -16,5 +17,7 @@ export type {
   ButtonType,
   ButtonBuilderOptions,
   NavButtonProps,
+  InputType,
+  InputBuilderOptions,
 };
 export { RoutePath, ApiPath };

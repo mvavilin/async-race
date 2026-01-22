@@ -1,5 +1,6 @@
 import ElementBuilder from '@utils/element-builder';
-import { type ButtonType, RoutePath } from '@types';
+import type { ButtonType, InputType } from '@types';
+import { RoutePath } from '@types';
 
 interface EventOptions {
   type: string;
@@ -37,4 +38,13 @@ export interface NavButtonProps {
   classes?: string[];
   text?: string;
   route: RoutePath;
+}
+
+export interface InputBuilderOptions {
+  id?: string;
+  classes?: string[];
+  value?: string;
+  type?: InputType;
+  placeholder?: string;
+  disabled?: boolean;
 }
