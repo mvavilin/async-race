@@ -14,6 +14,7 @@ export default defineConfig({
       '@components': resolve(__dirname, 'src/components'),
       '@utils': resolve(__dirname, 'src/utils'),
       '@types': resolve(__dirname, 'src/types'),
+      '@api': resolve(__dirname, 'src/api'),
     },
   },
 });

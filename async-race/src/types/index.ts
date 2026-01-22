@@ -4,6 +4,10 @@ import type {
   ButtonBuilderOptions,
   NavButtonProps,
   InputBuilderOptions,
+  CreateCarButtonProps,
+  UpdateCarButtonProps,
+  UpdateCarFormProps,
+  CreateCarFormProps,
 } from '@/types/interfaces';
 import type { Route, Car, QueryParam, ButtonType, InputType } from '@/types/types';
 import { RoutePath, ApiPath } from '@/types/enums';
@@ -19,5 +23,9 @@ export type {
   NavButtonProps,
   InputType,
   InputBuilderOptions,
+  CreateCarButtonProps,
+  UpdateCarButtonProps,
+  UpdateCarFormProps,
+  CreateCarFormProps,
 };
 export { RoutePath, ApiPath };

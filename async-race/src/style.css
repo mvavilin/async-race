@@ -12,6 +12,12 @@
 
   --color-text: #000000;
   --color-bg: #ffffff;
+  --color-input-disabled-bg: #f5f5f5;
+  --color-input-disabled-border: #dddddd;
+  --color-input-disabled-text: #999999;
+
+  --color-error: #fca5a5;
+  --color-error-focus: rgba(252, 165, 165, 0.35);
 }
 
 * {
@@ -74,4 +80,17 @@ body {
 .input:focus {
   border-color: var(--color-border-focus);
   box-shadow: 0 0 0 2px var(--color-shadow-focus);
+}
+
+.input:disabled {
+  background-color: var(--color-input-disabled-bg);
+  border-color: var(--color-input-disabled-border);
+  color: var(--color-input-disabled-text);
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.input-error {
+  border-color: var(--color-error);
+  box-shadow: 0 0 0 2px var(--color-error-focus);
 }

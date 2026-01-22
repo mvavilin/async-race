@@ -9,8 +9,9 @@ export default class InputBuilder extends ElementBuilder {
     type = 'text',
     placeholder = '',
     disabled = false,
+    event = { type: 'input', handler: () => {} },
   }: InputBuilderOptions = {}) {
-    super({ tag: 'input', id, classes: ['input', ...classes] });
+    super({ tag: 'input', id, classes: ['input', ...classes], event });
 
     this.setType(type);
     this.setValue(value);
@@ -30,7 +31,7 @@ export default class InputBuilder extends ElementBuilder {
 
   public getValue(): string {
     const input = this.getElement();
-    if (input instanceof HTMLInputElement) return input.value;
+    if (input instanceof HTMLInputElement) return input.value.trim();
     return '';
   }
 
@@ -45,6 +46,13 @@ export default class InputBuilder extends ElementBuilder {
   }
 
   public clear(): void {
-    this.setValue('');
+    const input = this.getElement();
+    if (input instanceof HTMLInputElement) {
+      if (input.type === 'color') {
+        input.value = '#000000';
+      } else {
+        input.value = '';
+      }
+    }
   }
 }

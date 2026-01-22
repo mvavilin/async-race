@@ -1,9 +1,11 @@
 import ElementBuilder from '@utils/element-builder';
-import type { ButtonType, InputType } from '@types';
+import TextInput from '@/components/inputs/TextInput/TextInput';
+import ColorInput from '@/components/inputs/ColorInput/ColorInput';
+import type { ButtonType, InputType, Car } from '@types';
 import { RoutePath } from '@types';
 
 interface EventOptions {
-  type: string;
+  type: InputType | ButtonType;
   handler: EventListenerOrEventListenerObject;
   options?: boolean | AddEventListenerOptions;
 }
@@ -47,4 +49,39 @@ export interface InputBuilderOptions {
   type?: InputType;
   placeholder?: string;
   disabled?: boolean;
+  event?: EventOptions;
+}
+
+interface BaseCarForm {
+  nameInput: TextInput;
+  colorInput: ColorInput;
+  clear: () => void;
+}
+
+interface UpdateCarForm extends BaseCarForm {
+  idInput: TextInput;
+}
+
+interface BaseCarButtonProps<FormType extends BaseCarForm> {
+  id?: string;
+  classes?: string[];
+  text?: string;
+  type?: ButtonType;
+  carForm: FormType;
+}
+
+export interface CreateCarButtonProps extends BaseCarButtonProps<BaseCarForm> {
+  onCreated: (car: Car) => void;
+}
+
+export interface UpdateCarButtonProps extends BaseCarButtonProps<UpdateCarForm> {
+  onUpdated: (car: Car) => void;
+}
+
+export interface CreateCarFormProps {
+  onCreated: (car: Car) => void;
+}
+
+export interface UpdateCarFormProps {
+  onUpdated: (car: Car) => void;
 }

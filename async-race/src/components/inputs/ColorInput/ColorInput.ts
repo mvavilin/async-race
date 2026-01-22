@@ -1,4 +1,4 @@
-import '@components/ColorInput/ColorInput.css';
+import '@components/inputs/ColorInput/ColorInput.css';
 import InputBuilder from '@utils/input-builder';
 import type { InputBuilderOptions } from '@types';
 
