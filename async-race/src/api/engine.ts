@@ -13,9 +13,8 @@ const setEngineStatus = async (queryParams: QueryParam[] = []): Promise<EngineRe
     case 400:
     case 404:
     case 429:
-      throw new Error(getErrorMessage(response));
     case 500:
-      return { success: false };
+      throw new Error(getErrorMessage(response));
     default:
       throw new Error(getErrorMessage(response));
   }

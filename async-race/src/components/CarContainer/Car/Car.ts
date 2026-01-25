@@ -1,73 +1,81 @@
-import ElementBuilder from '@utils/element-builder';
 import '@components/CarContainer/Car/Car.css';
+import ElementBuilder from '@utils/element-builder';
+import { CarStatus, type Car as CarOptions } from '@types';
 
-export enum CarStatus {
-  STOPPED = 'stopped',
-  STARTED = 'started',
-  DRIVING = 'driving',
-}
-
-interface CarOptions {
-  id: number;
-  name: string;
-  color: string;
-}
-
-interface CarUpdateOptions {
-  name: string;
-  color: string;
-}
-
-export class Car {
+export default class Car {
   private car: ElementBuilder;
-  private status: CarStatus = CarStatus.STOPPED;
-  private x: number = 0;
+  private status: CarStatus = CarStatus.INIT;
 
-  constructor({ id, name, color }: CarOptions) {
+  constructor(
+    private id: number,
+    private name: string,
+    private color: string
+  ) {
     this.car = new ElementBuilder({
-      classes: ['car', this.status],
+      classes: ['car'],
       attributes: { id: `${id}`, 'data-name': name },
-      styles: {
-        left: `${this.x}px`,
-        backgroundColor: color,
-      },
+      styles: { backgroundColor: color, left: '0px' },
     });
   }
 
-  public getElement(): ElementBuilder {
-    return this.car;
-  }
+  public getCar = (): ElementBuilder => this.car;
+  public getStatus = (): CarStatus => this.status;
+  public getElement = (): HTMLElement => this.car.getElement();
+  public getOffsetWidth = (): number => this.car.getElement().offsetWidth;
+  public getOffsetLeft = (): number => this.car.getElement().offsetLeft;
+  public getInfo = (): CarOptions => ({ id: this.id, name: this.name, color: this.color });
 
-  public update({ name, color }: CarUpdateOptions): void {
+  public updateInfo = ({ name, color }: Omit<CarOptions, 'id'>): void => {
     if (name) {
+      this.name = name;
       this.car.addAttribute({ 'data-name': name });
     }
     if (color) {
-      this.car.setStyle({ backgroundColor: color });
+      this.color = color;
+      this.car.addStyle({ backgroundColor: color });
     }
-  }
+  };
 
-  public startEngine(): void {
-    if (this.status === CarStatus.STOPPED) {
-      this.status = CarStatus.STARTED;
-      this.car.replaceClass([CarStatus.STOPPED], [CarStatus.STARTED]);
-    }
-  }
+  public isInit = (): boolean => this.status === CarStatus.INIT;
+  public isStarted = (): boolean => this.status === CarStatus.STARTED;
+  public isDriving = (): boolean => this.status === CarStatus.DRIVING;
+  public isBroken = (): boolean => this.status === CarStatus.BROKEN;
+  public isFinished = (): boolean => this.status === CarStatus.FINISHED;
 
-  public moveTo(x: number): void {
-    if (this.status === CarStatus.STARTED) {
-      this.status = CarStatus.DRIVING;
-      this.car.replaceClass([CarStatus.STARTED], [CarStatus.DRIVING]);
-    }
+  public start = (): void => {
+    if (this.isInit() === false) return;
 
-    this.x = x;
-    this.car.setStyle({ left: `${this.x}px` });
-  }
+    this.status = CarStatus.STARTED;
+  };
 
-  public stop(): void {
-    if (this.status === CarStatus.DRIVING) {
-      this.status = CarStatus.STOPPED;
-      this.car.replaceClass([CarStatus.DRIVING], [CarStatus.STOPPED]);
-    }
-  }
+  public drive = (x: number, duration: number): void => {
+    if (this.isStarted() === false) return;
+
+    this.status = CarStatus.DRIVING;
+    this.car.addStyle({
+      left: `${x}px`,
+      transition: `left ${duration}s linear`,
+    });
+  };
+
+  public break = (): void => {
+    if (this.isDriving() === false) return;
+
+    this.status = CarStatus.BROKEN;
+    this.car.addStyle({
+      left: `${this.getOffsetLeft()}px`,
+      transition: 'none',
+    });
+  };
+
+  public finish = (): void => {
+    if (this.isDriving() === false) return;
+
+    this.status = CarStatus.FINISHED;
+  };
+
+  public reset = (): void => {
+    this.status = CarStatus.INIT;
+    this.car.addStyle({ left: '0px', transition: 'none' });
+  };
 }

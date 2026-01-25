@@ -10,7 +10,7 @@ import type {
   CreateCarFormProps,
 } from '@/types/interfaces';
 import type { Route, Car, QueryParam, ButtonType, InputType } from '@/types/types';
-import { RoutePath, ApiPath } from '@/types/enums';
+import { RoutePath, ApiPath, CarStatus } from '@/types/enums';
 
 export type {
   ElementBuilderOptions,
@@ -28,4 +28,4 @@ export type {
   UpdateCarFormProps,
   CreateCarFormProps,
 };
-export { RoutePath, ApiPath };
+export { RoutePath, ApiPath, CarStatus };

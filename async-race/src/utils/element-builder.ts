@@ -21,7 +21,7 @@ export default class ElementBuilder {
     if (content) this.setContent(content);
     if (event) this.addEvent(event);
     if (children) this.addChild(...children);
-    if (styles) this.setStyle(styles);
+    if (styles) this.addStyle(styles);
   }
 
   public setId(id: string): void {
@@ -54,7 +54,7 @@ export default class ElementBuilder {
     classNames.forEach((className) => this.element.classList.toggle(className));
   }
 
-  public setStyle(styles: Partial<CSSStyleDeclaration>): void {
+  public addStyle(styles: Partial<CSSStyleDeclaration>): void {
     for (const key in styles) {
       const value = styles[key];
       if (value) {
@@ -107,5 +107,9 @@ export default class ElementBuilder {
 
   public getElement(): HTMLElement {
     return this.element;
+  }
+
+  public getOffsetWidth(): number {
+    return this.element.offsetWidth;
   }
 }

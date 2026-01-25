@@ -1,24 +1,25 @@
 import '@components/CarContainer/CarContainer.css';
+import type { Car as CarOptions } from '@types';
 import ElementBuilder from '@utils/element-builder';
-import { Car } from '@/components/CarContainer/Car/Car';
+import { Car, StartEngineButton, StopEngineButton } from '@components/CarContainer';
 
-export class CarContainer {
+export default class CarContainer {
   private carContainer: ElementBuilder;
   private car: Car;
+  private startButton: StartEngineButton;
+  private stopButton: StopEngineButton;
 
-  constructor() {
+  constructor({ id, name, color }: CarOptions) {
     this.carContainer = new ElementBuilder({ classes: ['car-container'] });
+    this.car = new Car(id, name, color);
 
-    // TODO
-    this.car = new Car({
-      name: 'Tesla',
-      color: '#e6e6fa',
-      id: 1,
-    });
-    this.carContainer.addChild(this.car.getElement());
+    this.startButton = new StartEngineButton(this.car, this.carContainer);
+    this.stopButton = new StopEngineButton(this.car);
+
+    this.carContainer.addChild(this.startButton, this.stopButton, this.car.getCar());
   }
 
-  public getCarContainer() {
+  public getElement() {
     return this.carContainer;
   }
 }

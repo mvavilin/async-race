@@ -1,7 +1,7 @@
 import ElementBuilder from '@utils/element-builder';
 import TextInput from '@components/inputs/TextInput/TextInput';
 import ColorInput from '@components/inputs/ColorInput/ColorInput';
-import UpdateCarButton from '@/components/forms/UpdateCarForm/UpdateCarButton';
+import UpdateCarButton from '@components/forms/UpdateCarForm/UpdateCarButton';
 import type { Car, UpdateCarFormProps } from '@types';
 
 export default class UpdateCarForm extends ElementBuilder {

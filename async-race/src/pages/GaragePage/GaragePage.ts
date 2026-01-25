@@ -1,23 +1,20 @@
-import '@pages/GaragePage/GaragePage.css';
 import { RoutePath } from '@types';
 import { BasePage } from '@pages';
 import ElementBuilder from '@utils/element-builder';
 import ButtonBuilder from '@utils/button-builder';
-import NavButton from '@/components/buttons/NavButton';
-import CarCreateForm from '@/components/forms/CreateCarForm/CreateCarForm';
-import UpdateCarForm from '@/components/forms/UpdateCarForm/UpdateCarForm';
+import NavButton from '@components/buttons/NavButton';
+import CarCreateForm from '@components/forms/CreateCarForm/CreateCarForm';
+import UpdateCarForm from '@components/forms/UpdateCarForm/UpdateCarForm';
 import type { Car } from '@types';
-import { CarContainer } from '@/components/CarContainer/CarContainer';
+import { CarContainer } from '@components/CarContainer';
 
 export default class GaragePage extends BasePage {
-  protected title: ElementBuilder;
-  protected winnersButton: NavButton;
-  protected createForm: CarCreateForm;
-  protected updateForm: UpdateCarForm;
+  private title: ElementBuilder;
+  private winnersButton: NavButton;
+  private createForm: CarCreateForm;
+  private updateForm: UpdateCarForm;
   private track: ElementBuilder;
-
-  protected selectCarButton: ButtonBuilder;
-
+  private selectCarButton: ButtonBuilder;
   // TODO
   private carContainer: CarContainer;
 
@@ -25,10 +22,8 @@ export default class GaragePage extends BasePage {
     super();
 
     this.title = new ElementBuilder({ tag: 'h1', content: 'Garage' });
-    this.root.addChild(this.title);
 
     this.winnersButton = new NavButton({ text: 'Winners', route: RoutePath.WINNERS });
-    this.root.addChild(this.winnersButton);
 
     this.createForm = new CarCreateForm({
       onCreated: (car) => {
@@ -36,14 +31,11 @@ export default class GaragePage extends BasePage {
         console.log('Car created:', car);
       },
     });
-    this.root.addChild(this.createForm);
 
     this.updateForm = new UpdateCarForm({
       // TODO
       onUpdated: (car) => console.log('Car updated:', car),
     });
-    this.root.addChild(this.updateForm);
-
     // TODO
     this.selectCarButton = new ButtonBuilder({
       text: 'Select Car',
@@ -56,12 +48,24 @@ export default class GaragePage extends BasePage {
         },
       },
     });
-    this.root.addChild(this.selectCarButton);
 
     this.track = new ElementBuilder({ id: 'track', classes: ['track'] });
-    this.carContainer = new CarContainer();
-    this.track.addChild(this.carContainer.getCarContainer());
-    this.root.addChild(this.track);
+    // TODO
+    this.carContainer = new CarContainer({
+      name: 'Tesla',
+      color: '#515188ff',
+      id: 1,
+    });
+
+    this.track.addChild(this.carContainer.getElement());
+    this.root.addChild(
+      this.title,
+      this.winnersButton,
+      this.createForm,
+      this.updateForm,
+      this.selectCarButton,
+      this.track
+    );
 
     this.render();
   }
