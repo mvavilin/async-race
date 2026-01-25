@@ -18,6 +18,7 @@ export interface ElementBuilderOptions {
   content?: string;
   event?: EventOptions;
   children?: ElementBuilder[];
+  styles?: Partial<CSSStyleDeclaration>;
 }
 
 export interface EngineResponse {

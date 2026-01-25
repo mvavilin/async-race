@@ -1,20 +1,25 @@
+import '@pages/GaragePage/GaragePage.css';
+import { RoutePath } from '@types';
 import { BasePage } from '@pages';
 import ElementBuilder from '@utils/element-builder';
+import ButtonBuilder from '@utils/button-builder';
 import NavButton from '@/components/buttons/NavButton';
-import { RoutePath } from '@types';
 import CarCreateForm from '@/components/forms/CreateCarForm/CreateCarForm';
 import UpdateCarForm from '@/components/forms/UpdateCarForm/UpdateCarForm';
-
-import ButtonBuilder from '@utils/button-builder';
 import type { Car } from '@types';
+import { CarContainer } from '@/components/CarContainer/CarContainer';
 
 export default class GaragePage extends BasePage {
   protected title: ElementBuilder;
   protected winnersButton: NavButton;
   protected createForm: CarCreateForm;
   protected updateForm: UpdateCarForm;
+  private track: ElementBuilder;
 
   protected selectCarButton: ButtonBuilder;
+
+  // TODO
+  private carContainer: CarContainer;
 
   constructor() {
     super();
@@ -52,6 +57,11 @@ export default class GaragePage extends BasePage {
       },
     });
     this.root.addChild(this.selectCarButton);
+
+    this.track = new ElementBuilder({ id: 'track', classes: ['track'] });
+    this.carContainer = new CarContainer();
+    this.track.addChild(this.carContainer.getCarContainer());
+    this.root.addChild(this.track);
 
     this.render();
   }

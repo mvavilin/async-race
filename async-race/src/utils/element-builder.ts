@@ -11,6 +11,7 @@ export default class ElementBuilder {
     content,
     event,
     children,
+    styles,
   }: ElementBuilderOptions = {}) {
     this.element = document.createElement(tag);
 
@@ -20,6 +21,7 @@ export default class ElementBuilder {
     if (content) this.setContent(content);
     if (event) this.addEvent(event);
     if (children) this.addChild(...children);
+    if (styles) this.setStyle(styles);
   }
 
   public setId(id: string): void {
@@ -38,8 +40,27 @@ export default class ElementBuilder {
     this.element.classList.remove(...classNames);
   }
 
+  public replaceClass(
+    remove: NonNullable<ElementBuilderOptions['classes']>,
+    add: NonNullable<ElementBuilderOptions['classes']>
+  ): void {
+    this.removeClass(...remove);
+    this.addClass(...add);
+  }
+
+  public hasClass = (className: string): boolean => this.element.classList.contains(className);
+
   public toggleClass(...classNames: NonNullable<ElementBuilderOptions['classes']>): void {
     classNames.forEach((className) => this.element.classList.toggle(className));
+  }
+
+  public setStyle(styles: Partial<CSSStyleDeclaration>): void {
+    for (const key in styles) {
+      const value = styles[key];
+      if (value) {
+        this.element.style[key] = value;
+      }
+    }
   }
 
   public addAttribute(attributes: NonNullable<ElementBuilderOptions['attributes']>): void {
