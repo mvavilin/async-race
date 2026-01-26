@@ -14,6 +14,19 @@ export default class DeleteCarButton extends ButtonBuilder {
     });
 
     this.carContainer = carContainer;
+
+    this.carSubscribe();
+  }
+
+  private carSubscribe() {
+    const car = this.carContainer.getCar();
+
+    const updateState = () => {
+      this.setDisabled(car.isInit() === false);
+    };
+    updateState();
+
+    car.subscribe(updateState);
   }
 
   public setCarContainer(carContainer: CarContainer) {
@@ -31,8 +44,6 @@ export default class DeleteCarButton extends ButtonBuilder {
       if (this.carContainer.onDeleted) this.carContainer.onDeleted();
     } catch (error: unknown) {
       throw new Error(getErrorMessageFromError(error));
-    } finally {
-      this.setDisabled(false);
     }
   };
 }

@@ -1,10 +1,12 @@
 import '@components/CarContainer/Car/Car.css';
 import ElementBuilder from '@utils/element-builder';
-import { CarStatus, type CarOptions } from '@types';
+import { CarStatus, type CarOptions, type Listener } from '@types';
 
 export default class Car {
   private car: ElementBuilder;
   private status: CarStatus = CarStatus.INIT;
+
+  private listeners = new Set<Listener>();
 
   constructor(
     private id: number,
@@ -16,6 +18,18 @@ export default class Car {
       attributes: { id: `${id}`, 'data-name': name },
       styles: { backgroundColor: color, left: '0px' },
     });
+  }
+
+  public subscribe(fn: Listener) {
+    this.listeners.add(fn);
+  }
+
+  public unsubscribe(fn: Listener) {
+    this.listeners.delete(fn);
+  }
+
+  private notify() {
+    this.listeners.forEach((fn) => fn(this.status));
   }
 
   public getCar = (): ElementBuilder => this.car;
@@ -46,6 +60,8 @@ export default class Car {
     if (this.isInit() === false) return;
 
     this.status = CarStatus.STARTED;
+
+    this.notify();
   };
 
   public drive = (x: number, duration: number): void => {
@@ -56,6 +72,17 @@ export default class Car {
       left: `${x}px`,
       transition: `left ${duration}s linear`,
     });
+
+    this.notify();
+
+    setTimeout(() => {
+      if (this.isFinished()) {
+        this.status = CarStatus.FINISHED;
+        this.car.addStyle({ backgroundColor: 'green' });
+
+        this.notify();
+      }
+    }, duration * 1000);
   };
 
   public break = (): void => {
@@ -65,7 +92,10 @@ export default class Car {
     this.car.addStyle({
       left: `${this.getOffsetLeft()}px`,
       transition: 'none',
+      backgroundColor: 'red',
     });
+
+    this.notify();
   };
 
   public finish = (): void => {
@@ -76,6 +106,10 @@ export default class Car {
 
   public reset = (): void => {
     this.status = CarStatus.INIT;
-    this.car.addStyle({ left: '0px', transition: 'none' });
+
+    this.car.removeStyle('left', 'transition');
+    this.car.addStyle({ backgroundColor: this.color });
+
+    this.notify();
   };
 }

@@ -63,7 +63,7 @@ export default class UpdateCarButton extends ButtonBuilder {
     } catch (error: unknown) {
       throw new Error(getErrorMessageFromError(error));
     } finally {
-      this.setDisabled(false);
+      // this.setDisabled(false);
     }
   };
 }

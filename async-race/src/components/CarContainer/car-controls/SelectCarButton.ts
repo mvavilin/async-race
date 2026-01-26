@@ -7,8 +7,20 @@ export default class SelectCarButton extends ButtonBuilder {
     private onSelect: (carContainer: CarContainer) => void
   ) {
     super({ classes: ['select-car-btn'], text: 'Select' });
-
     this.addEvent({ type: 'click', handler: () => this.handleClick() });
+
+    this.carSubscribe();
+  }
+
+  private carSubscribe() {
+    const car = this.carContainer.getCar();
+
+    const updateState = () => {
+      this.setDisabled(car.isInit() === false);
+    };
+    updateState();
+
+    car.subscribe(updateState);
   }
 
   private handleClick = (): void => {

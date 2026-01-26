@@ -1,5 +1,5 @@
 import { BasePage } from '@pages';
-import { RoutePath } from '@types';
+import { RoutePath, CarStatus } from '@types';
 
 export type Route = {
   path: RoutePath;
@@ -20,3 +20,5 @@ export type QueryParam = {
 export type ButtonType = HTMLButtonElement['type'];
 
 export type InputType = HTMLInputElement['type'];
+
+export type Listener = (status: CarStatus) => void;

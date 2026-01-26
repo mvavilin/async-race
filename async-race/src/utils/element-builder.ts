@@ -63,6 +63,12 @@ export default class ElementBuilder {
     }
   }
 
+  public removeStyle(...keys: (keyof CSSStyleDeclaration)[]): void {
+    keys.forEach((key) => {
+      this.element.style.removeProperty(String(key));
+    });
+  }
+
   public addAttribute(attributes: NonNullable<ElementBuilderOptions['attributes']>): void {
     for (const [name, value] of Object.entries(attributes)) {
       this.element.setAttribute(name, value);
