@@ -6,6 +6,7 @@ export enum RoutePath {
 export enum ApiPath {
   GARAGE = '/garage',
   ENGINE = '/engine',
+  WINNERS = '/winners',
 }
 
 export enum CarStatus {

@@ -17,6 +17,12 @@ export type QueryParam = {
   value: string;
 };
 
+export type WinnerOptions = {
+  id: number;
+  wins: number;
+  time: number;
+};
+
 export type ButtonType = HTMLButtonElement['type'];
 
 export type InputType = HTMLInputElement['type'];
