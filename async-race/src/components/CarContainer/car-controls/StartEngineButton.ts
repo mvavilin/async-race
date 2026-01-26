@@ -1,6 +1,6 @@
-import { startEngine, driveEngine } from '@api/engine';
-import { ElementBuilder, ButtonBuilder } from '@utils';
+import { ElementBuilder, ButtonBuilder, startRace } from '@utils';
 import { Car } from '@components/CarContainer';
+import { raceState } from '@state/RaceState';
 
 export default class StartEngineButton extends ButtonBuilder {
   constructor(
@@ -15,7 +15,7 @@ export default class StartEngineButton extends ButtonBuilder {
 
   private carSubscribe() {
     const updateState = () => {
-      this.setDisabled(this.car.isInit() === false);
+      this.setDisabled(this.car.isInit() === false || raceState.getRacing());
     };
     updateState();
 
@@ -23,26 +23,9 @@ export default class StartEngineButton extends ButtonBuilder {
   }
 
   private handleClick = async () => {
-    if (this.car.isInit() === false) return;
-
     this.setDisabled(true);
-
-    try {
-      this.car.start();
-
-      const startResponse = await startEngine(this.car.getInfo().id);
-      if (startResponse.velocity === undefined) return;
-
-      const distance = this.carContainer.getOffsetWidth() - this.car.getOffsetWidth();
-      const duration = distance / startResponse.velocity;
-
-      this.car.drive(distance, duration);
-
-      await driveEngine(this.car.getInfo().id);
-
-      this.car.finish();
-    } catch {
-      this.car.break();
-    }
+    const distance = this.carContainer.getOffsetWidth() - this.car.getOffsetWidth();
+    raceState.setRacing(true);
+    await startRace(this.car, distance);
   };
 }

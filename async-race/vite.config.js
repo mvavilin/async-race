@@ -15,6 +15,7 @@ export default defineConfig({
       '@utils': resolve(__dirname, 'src/utils'),
       '@types': resolve(__dirname, 'src/types'),
       '@api': resolve(__dirname, 'src/api'),
+      '@state': resolve(__dirname, 'src/state'),
     },
   },
 });

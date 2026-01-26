@@ -5,17 +5,17 @@ import { Car } from '@components/CarContainer';
 
 export default class StopEngineButton extends ButtonBuilder {
   constructor(private car: Car) {
-    super({ classes: ['stop-engine-btn'], text: 'Stop Engine / Reset' });
+    super({ classes: ['stop-engine-btn'], text: 'Stop Engine / Reset', disabled: true });
     this.addEvent({ type: 'click', handler: () => this.handleClick() });
+
     this.carSubscribe();
   }
 
   private carSubscribe() {
     const updateState = () => {
-      this.setDisabled(!(this.car.isBroken() || this.car.isFinished()));
+      this.setDisabled(!(this.car.isFinished() || this.car.isBroken()));
     };
     updateState();
-
     this.car.subscribe(updateState);
   }
 

@@ -2,6 +2,7 @@ import ButtonBuilder from '@utils/button-builder';
 import type { CreateCarButtonProps } from '@types';
 import { createCar } from '@api/garage';
 import { getErrorMessageFromError } from '@utils/api';
+import { raceState } from '@state/RaceState';
 
 export default class CreateCarButton extends ButtonBuilder {
   constructor({
@@ -39,6 +40,10 @@ export default class CreateCarButton extends ButtonBuilder {
           }
         },
       },
+    });
+
+    raceState.subscribe((racing) => {
+      this.setDisabled(racing);
     });
   }
 }

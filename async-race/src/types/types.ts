@@ -21,4 +21,6 @@ export type ButtonType = HTMLButtonElement['type'];
 
 export type InputType = HTMLInputElement['type'];
 
-export type Listener = (status: CarStatus) => void;
+export type CarListener = (status: CarStatus) => void;
+
+export type RaceStateListener = (racing: boolean) => void;

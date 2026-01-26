@@ -1,4 +1,6 @@
 import { CAR_NAMES } from '@/constants';
+import { startEngine, driveEngine } from '@api/engine';
+import { Car } from '@components/CarContainer';
 
 export const getRandomName: () => string = () => {
   const brands: string[] = Object.keys(CAR_NAMES);
@@ -17,3 +19,23 @@ export const getRandomColor: () => string = () =>
   `#${Math.floor(Math.random() * 16777215)
     .toString(16)
     .padStart(6, '0')}`;
+
+export async function startRace(car: Car, distance: number): Promise<void> {
+  if (car.isInit() === false) return;
+
+  car.start();
+
+  try {
+    const startResponse = await startEngine(car.getInfo().id);
+    if (startResponse.velocity === undefined) return;
+
+    const duration = distance / startResponse.velocity;
+    car.drive(distance, duration);
+
+    await driveEngine(car.getInfo().id);
+
+    car.finish();
+  } catch {
+    car.break();
+  }
+}

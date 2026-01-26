@@ -1,12 +1,12 @@
 import '@components/CarContainer/Car/Car.css';
 import ElementBuilder from '@utils/element-builder';
-import { CarStatus, type CarOptions, type Listener } from '@types';
+import { CarStatus, type CarOptions, type CarListener } from '@types';
 
 export default class Car {
   private car: ElementBuilder;
   private status: CarStatus = CarStatus.INIT;
 
-  private listeners = new Set<Listener>();
+  private listeners = new Set<CarListener>();
 
   constructor(
     private id: number,
@@ -20,16 +20,16 @@ export default class Car {
     });
   }
 
-  public subscribe(fn: Listener) {
-    this.listeners.add(fn);
+  public subscribe(func: CarListener) {
+    this.listeners.add(func);
   }
 
-  public unsubscribe(fn: Listener) {
-    this.listeners.delete(fn);
+  public unsubscribe(func: CarListener) {
+    this.listeners.delete(func);
   }
 
   private notify() {
-    this.listeners.forEach((fn) => fn(this.status));
+    this.listeners.forEach((func) => func(this.status));
   }
 
   public getCar = (): ElementBuilder => this.car;

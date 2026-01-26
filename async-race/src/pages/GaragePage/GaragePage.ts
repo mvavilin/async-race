@@ -1,6 +1,7 @@
 import { BasePage } from '@pages';
-import { ElementBuilder, ButtonBuilder, getErrorMessageFromError } from '@utils';
+import { ElementBuilder, ButtonBuilder, getErrorMessageFromError, startRace } from '@utils';
 import {
+  Car,
   CreateCarForm,
   UpdateCarForm,
   NavButton,
@@ -10,6 +11,7 @@ import {
 import { RoutePath } from '@types';
 import type { CarOptions, QueryParam } from '@types';
 import { getCars } from '@api/garage';
+import { raceState } from '@state/RaceState';
 
 export default class GaragePage extends BasePage {
   private winnersButton: NavButton;
@@ -19,6 +21,7 @@ export default class GaragePage extends BasePage {
   private createForm: CreateCarForm;
   private updateForm: UpdateCarForm;
 
+  private startRaceButton: ButtonBuilder;
   private generateButton: GenerateCarsButton;
 
   private pageIndicator: ElementBuilder;
@@ -28,6 +31,8 @@ export default class GaragePage extends BasePage {
 
   private track: ElementBuilder;
   private limit = 7;
+
+  private cars: Car[] = [];
 
   constructor() {
     super();
@@ -58,22 +63,36 @@ export default class GaragePage extends BasePage {
 
     this.track = new ElementBuilder({ id: 'track', classes: ['track'] });
 
+    this.startRaceButton = new ButtonBuilder({ text: 'Start Race', classes: ['start-race-btn'] });
+    this.startRaceButton.addEvent({ type: 'click', handler: () => this.handleStartRace() });
+
+    raceState.subscribe((racing) => {
+      this.winnersButton.setDisabled(racing);
+      this.startRaceButton.setDisabled(racing);
+      this.generateButton.setDisabled(racing);
+      this.prevButton.setDisabled(racing || this.currentPage <= 1);
+      this.nextButton.setDisabled(racing || this.currentPage * this.limit >= this.totalCars);
+    });
+
+    this.loadCars();
+
+    this.render();
+  }
+
+  public render(): void {
     this.root.addChild(
       this.title,
       this.winnersButton,
       this.createForm,
       this.updateForm,
+      this.startRaceButton,
       this.generateButton,
       this.pageIndicator,
       this.prevButton,
       this.nextButton,
       this.track
     );
-
-    this.loadCars();
   }
-
-  public render(): void {}
 
   private changePage(page: number) {
     if (page < 1) return;
@@ -108,14 +127,27 @@ export default class GaragePage extends BasePage {
     }
   }
 
-  private addCarToTrack(car: CarOptions): void {
-    if (this.track.getChildCount() === this.limit) return;
+  private async handleStartRace() {
+    if (raceState.getRacing()) return;
 
+    raceState.setRacing(true);
+
+    const promises = this.cars.map((car) => {
+      const distance = this.track.getOffsetWidth() - car.getOffsetWidth();
+      return startRace(car, distance);
+    });
+
+    await Promise.all(promises);
+  }
+
+  private addCarToTrack(car: CarOptions): void {
     const carContainer = new CarContainer(car, (container) => this.updateForm.setCar(container));
 
-    carContainer.onDeleted = () => this.handleCarDeleted();
+    carContainer.onDeleted = () => this.handleCarDeleted(carContainer);
 
     this.track.addChild(carContainer.getElement());
+
+    this.cars.push(carContainer.getCar());
   }
 
   private async handleCarCreated(car: CarOptions) {
@@ -127,7 +159,9 @@ export default class GaragePage extends BasePage {
     this.addCarToTrack(car);
   }
 
-  public handleCarDeleted(): void {
+  public handleCarDeleted(carContainer: CarContainer): void {
+    this.cars = this.cars.filter((car) => car !== carContainer.getCar());
+
     this.totalCars -= 1;
     this.title.setContent(`Garage (${this.totalCars})`);
 

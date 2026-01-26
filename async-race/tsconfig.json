@@ -42,6 +42,7 @@
       "@utils": ["src/utils"],
       "@utils/*": ["src/utils/*"],
       "@types": ["src/types"],
+      "@state/*": ["src/state/*"],
       "@api/*": ["src/api/*"]
     }
   },

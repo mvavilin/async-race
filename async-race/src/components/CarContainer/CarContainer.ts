@@ -1,6 +1,6 @@
 import '@components/CarContainer/CarContainer.css';
 import type { CarOptions } from '@types';
-import ElementBuilder from '@utils/element-builder';
+import { ElementBuilder } from '@utils';
 import {
   Car,
   StartEngineButton,

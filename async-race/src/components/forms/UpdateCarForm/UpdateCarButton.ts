@@ -3,6 +3,7 @@ import type { UpdateCarButtonProps } from '@types';
 import { updateCar } from '@api/garage';
 import { getErrorMessageFromError } from '@utils/api';
 import type { CarContainer } from '@components/CarContainer';
+import { raceState } from '@state/RaceState';
 
 export default class UpdateCarButton extends ButtonBuilder {
   private carContainer: CarContainer | undefined;
@@ -31,6 +32,10 @@ export default class UpdateCarButton extends ButtonBuilder {
 
     this.carForm = carForm;
     this.onUpdated = onUpdated;
+
+    raceState.subscribe((racing) => {
+      this.setDisabled(racing);
+    });
   }
 
   public setCarContainer(carContainer: CarContainer) {
@@ -62,8 +67,6 @@ export default class UpdateCarButton extends ButtonBuilder {
       this.carForm.clear();
     } catch (error: unknown) {
       throw new Error(getErrorMessageFromError(error));
-    } finally {
-      // this.setDisabled(false);
     }
   };
 }

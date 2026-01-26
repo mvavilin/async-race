@@ -2,6 +2,7 @@ import ButtonBuilder from '@utils/button-builder';
 import { deleteCar } from '@api/garage';
 import { getErrorMessageFromError } from '@utils/api';
 import type { CarContainer } from '@components/CarContainer';
+import { raceState } from '@state/RaceState';
 
 export default class DeleteCarButton extends ButtonBuilder {
   private carContainer: CarContainer;
@@ -22,7 +23,7 @@ export default class DeleteCarButton extends ButtonBuilder {
     const car = this.carContainer.getCar();
 
     const updateState = () => {
-      this.setDisabled(car.isInit() === false);
+      this.setDisabled(car.isInit() === false || raceState.getRacing());
     };
     updateState();
 
