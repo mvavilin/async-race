@@ -9,6 +9,7 @@ export default class StartEngineButton extends ButtonBuilder {
     private carContainer: ElementBuilder
   ) {
     super({ classes: ['start-engine-btn'], text: 'Start Engine' });
+
     this.addEvent({ type: 'click', handler: () => this.handleClick() });
   }
 
@@ -18,13 +19,13 @@ export default class StartEngineButton extends ButtonBuilder {
     this.setDisabled(true);
 
     try {
-      const startResp = await startEngine(this.car.getInfo().id);
-      if (startResp.velocity === undefined) return;
+      const startResponse = await startEngine(this.car.getInfo().id);
+      if (startResponse.velocity === undefined) return;
 
       this.car.start();
 
       const distance = this.carContainer.getOffsetWidth() - this.car.getOffsetWidth();
-      const duration = distance / startResp.velocity;
+      const duration = distance / startResponse.velocity;
 
       this.car.drive(distance, duration);
 

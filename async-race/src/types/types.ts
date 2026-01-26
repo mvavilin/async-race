@@ -6,7 +6,7 @@ export type Route = {
   component: BasePage;
 };
 
-export type Car = {
+export type CarOptions = {
   id: number;
   name: string;
   color: string;

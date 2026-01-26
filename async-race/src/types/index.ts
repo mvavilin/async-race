@@ -9,13 +9,13 @@ import type {
   UpdateCarFormProps,
   CreateCarFormProps,
 } from '@/types/interfaces';
-import type { Route, Car, QueryParam, ButtonType, InputType } from '@/types/types';
+import type { Route, CarOptions, QueryParam, ButtonType, InputType } from '@/types/types';
 import { RoutePath, ApiPath, CarStatus } from '@/types/enums';
 
 export type {
   ElementBuilderOptions,
   Route,
-  Car,
+  CarOptions,
   QueryParam,
   EngineResponse,
   ButtonType,

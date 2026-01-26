@@ -1,7 +1,8 @@
 import ElementBuilder from '@utils/element-builder';
 import TextInput from '@/components/inputs/TextInput/TextInput';
 import ColorInput from '@/components/inputs/ColorInput/ColorInput';
-import type { ButtonType, InputType, Car } from '@types';
+import type { ButtonType, InputType, CarOptions } from '@types';
+import type { CarContainer } from '@components/CarContainer';
 import { RoutePath } from '@types';
 
 interface EventOptions {
@@ -72,17 +73,18 @@ interface BaseCarButtonProps<FormType extends BaseCarForm> {
 }
 
 export interface CreateCarButtonProps extends BaseCarButtonProps<BaseCarForm> {
-  onCreated: (car: Car) => void;
+  onCreated: (car: CarOptions) => void;
 }
 
 export interface UpdateCarButtonProps extends BaseCarButtonProps<UpdateCarForm> {
-  onUpdated: (car: Car) => void;
+  carContainer: CarContainer | undefined;
+  onUpdated: (car: CarOptions) => void;
 }
 
 export interface CreateCarFormProps {
-  onCreated: (car: Car) => void;
+  onCreated: (car: CarOptions) => void;
 }
 
 export interface UpdateCarFormProps {
-  onUpdated: (car: Car) => void;
+  onUpdated: (car: CarOptions) => void;
 }

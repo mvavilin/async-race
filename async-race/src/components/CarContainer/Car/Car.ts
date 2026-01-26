@@ -1,6 +1,6 @@
 import '@components/CarContainer/Car/Car.css';
 import ElementBuilder from '@utils/element-builder';
-import { CarStatus, type Car as CarOptions } from '@types';
+import { CarStatus, type CarOptions } from '@types';
 
 export default class Car {
   private car: ElementBuilder;

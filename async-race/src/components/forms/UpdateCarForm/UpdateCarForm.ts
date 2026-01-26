@@ -2,7 +2,8 @@ import ElementBuilder from '@utils/element-builder';
 import TextInput from '@components/inputs/TextInput/TextInput';
 import ColorInput from '@components/inputs/ColorInput/ColorInput';
 import UpdateCarButton from '@components/forms/UpdateCarForm/UpdateCarButton';
-import type { Car, UpdateCarFormProps } from '@types';
+import type { CarOptions, UpdateCarFormProps } from '@types';
+import type { Car, CarContainer } from '@components/CarContainer';
 
 export default class UpdateCarForm extends ElementBuilder {
   private idInput: TextInput;
@@ -22,6 +23,7 @@ export default class UpdateCarForm extends ElementBuilder {
     this.colorInput = new ColorInput({ value: '#00ff00', disabled: true });
 
     this.updateButton = new UpdateCarButton({
+      carContainer: undefined,
       carForm: {
         idInput: this.idInput,
         nameInput: this.nameInput,
@@ -34,10 +36,15 @@ export default class UpdateCarForm extends ElementBuilder {
     this.addChild(this.idInput, this.nameInput, this.colorInput, this.updateButton);
   }
 
-  public setCarData(car: Car): void {
-    this.idInput.setValue(String(car.id));
-    this.nameInput.setValue(car.name);
-    this.colorInput.setValue(car.color);
+  public setCar(carContainer: CarContainer): void {
+    const car: Car = carContainer.getCar();
+    const carData: CarOptions = car.getInfo();
+
+    this.idInput.setValue(String(carData.id));
+    this.nameInput.setValue(carData.name);
+    this.colorInput.setValue(carData.color);
+
+    this.updateButton.setCarContainer(carContainer);
 
     this.nameInput.setDisabled(false);
     this.colorInput.setDisabled(false);

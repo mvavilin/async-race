@@ -1,15 +1,15 @@
-import { ApiPath, type QueryParam, type Car } from '@types';
+import { ApiPath, type QueryParam, type CarOptions } from '@types';
 import { BASE_URL } from '@/constants';
 import { generateQueryString, getErrorMessage } from '@utils/api';
 
 export const getCars = async (
   queryParams: QueryParam[] = []
-): Promise<{ items: Car[]; count: number }> => {
+): Promise<{ items: CarOptions[]; count: number }> => {
   const response = await fetch(`${BASE_URL}${ApiPath.GARAGE}${generateQueryString(queryParams)}`);
 
   switch (response.status) {
     case 200: {
-      const items: Car[] = await response.json();
+      const items: CarOptions[] = await response.json();
       const count: number = Number(response.headers.get('X-Total-Count'));
       return { items, count };
     }
@@ -18,7 +18,7 @@ export const getCars = async (
   }
 };
 
-export const getCar = async (carId: number): Promise<Car | null> => {
+export const getCar = async (carId: number): Promise<CarOptions | null> => {
   const response = await fetch(`${BASE_URL}${ApiPath.GARAGE}/${carId}`);
 
   switch (response.status) {
@@ -31,7 +31,7 @@ export const getCar = async (carId: number): Promise<Car | null> => {
   }
 };
 
-export const createCar = async (carData: Omit<Car, 'id'>): Promise<Car> => {
+export const createCar = async (carData: Omit<CarOptions, 'id'>): Promise<CarOptions> => {
   const response = await fetch(`${BASE_URL}${ApiPath.GARAGE}`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -46,7 +46,10 @@ export const createCar = async (carData: Omit<Car, 'id'>): Promise<Car> => {
   }
 };
 
-export const updateCar = async (carId: number, carData: Omit<Car, 'id'>): Promise<Car | null> => {
+export const updateCar = async (
+  carId: number,
+  carData: Omit<CarOptions, 'id'>
+): Promise<CarOptions | null> => {
   const response = await fetch(`${BASE_URL}${ApiPath.GARAGE}/${carId}`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },

@@ -1,12 +1,11 @@
 import { RoutePath } from '@types';
 import { BasePage } from '@pages';
 import ElementBuilder from '@utils/element-builder';
-import ButtonBuilder from '@utils/button-builder';
 import NavButton from '@components/buttons/NavButton';
 import CarCreateForm from '@components/forms/CreateCarForm/CreateCarForm';
 import UpdateCarForm from '@components/forms/UpdateCarForm/UpdateCarForm';
-import type { Car } from '@types';
 import { CarContainer } from '@components/CarContainer';
+import type { CarOptions } from '@types';
 
 export default class GaragePage extends BasePage {
   private title: ElementBuilder;
@@ -14,8 +13,7 @@ export default class GaragePage extends BasePage {
   private createForm: CarCreateForm;
   private updateForm: UpdateCarForm;
   private track: ElementBuilder;
-  private selectCarButton: ButtonBuilder;
-  // TODO
+  // DELETE
   private carContainer: CarContainer;
 
   constructor() {
@@ -27,35 +25,23 @@ export default class GaragePage extends BasePage {
 
     this.createForm = new CarCreateForm({
       onCreated: (car) => {
-        // TODO
+        // DELETE
         console.log('Car created:', car);
       },
     });
 
     this.updateForm = new UpdateCarForm({
-      // TODO
+      // DELETE
       onUpdated: (car) => console.log('Car updated:', car),
-    });
-    // TODO
-    this.selectCarButton = new ButtonBuilder({
-      text: 'Select Car',
-      classes: ['select-car-btn'],
-      event: {
-        type: 'click',
-        handler: () => {
-          const car: Car = { id: 1, name: 'Tesla Model S', color: '#ff0000' };
-          this.updateForm.setCarData(car);
-        },
-      },
     });
 
     this.track = new ElementBuilder({ id: 'track', classes: ['track'] });
     // TODO
-    this.carContainer = new CarContainer({
-      name: 'Tesla',
-      color: '#515188ff',
-      id: 1,
-    });
+    const car: CarOptions = { name: 'Tesla', color: '#515188', id: 1 };
+    //
+    this.carContainer = new CarContainer(car, (carContainer) =>
+      this.updateForm.setCar(carContainer)
+    );
 
     this.track.addChild(this.carContainer.getElement());
     this.root.addChild(
@@ -63,7 +49,6 @@ export default class GaragePage extends BasePage {
       this.winnersButton,
       this.createForm,
       this.updateForm,
-      this.selectCarButton,
       this.track
     );
 
