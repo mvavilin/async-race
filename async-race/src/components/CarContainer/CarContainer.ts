@@ -6,7 +6,7 @@ import {
   StartEngineButton,
   StopEngineButton,
   SelectCarButton,
-  DeleteCarButton
+  DeleteCarButton,
 } from '@components/CarContainer';
 
 export default class CarContainer {

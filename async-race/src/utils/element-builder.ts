@@ -112,4 +112,9 @@ export default class ElementBuilder {
   public getOffsetWidth(): number {
     return this.element.offsetWidth;
   }
+
+  public getChildCount(): number {
+    const element = this.getElement();
+    return element ? element.childElementCount : 0;
+  }
 }

@@ -13,37 +13,22 @@ export default class GaragePage extends BasePage {
   private createForm: CarCreateForm;
   private updateForm: UpdateCarForm;
   private track: ElementBuilder;
-  // DELETE
-  private carContainer: CarContainer;
 
   constructor() {
     super();
 
     this.title = new ElementBuilder({ tag: 'h1', content: 'Garage' });
-
     this.winnersButton = new NavButton({ text: 'Winners', route: RoutePath.WINNERS });
-
-    this.createForm = new CarCreateForm({
-      onCreated: (car) => {
-        // DELETE
-        console.log('Car created:', car);
-      },
-    });
-
-    this.updateForm = new UpdateCarForm({
-      // DELETE
-      onUpdated: (car) => console.log('Car updated:', car),
-    });
-
+    this.createForm = new CarCreateForm({ onCreated: (car) => this.addCarToTrack(car) });
+    this.updateForm = new UpdateCarForm({ onUpdated: (car) => car });
     this.track = new ElementBuilder({ id: 'track', classes: ['track'] });
+
+
     // TODO
     const car: CarOptions = { name: 'Tesla', color: '#515188', id: 2 };
     //
-    this.carContainer = new CarContainer(car, (carContainer) =>
-      this.updateForm.setCar(carContainer)
-    );
+    this.addCarToTrack(car);
 
-    this.track.addChild(this.carContainer.getElement());
     this.root.addChild(
       this.title,
       this.winnersButton,
@@ -55,5 +40,14 @@ export default class GaragePage extends BasePage {
     this.render();
   }
 
-  public render(): void {}
+  private addCarToTrack(car: CarOptions): void {
+    if (this.track.getChildCount() > 7) return;
+
+    const carContainer = new CarContainer(car, (carContainer) =>
+      this.updateForm.setCar(carContainer)
+    );
+    this.track.addChild(carContainer.getElement());
+  }
+
+  public render(): void { }
 }
