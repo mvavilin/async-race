@@ -22,6 +22,7 @@ export default class GaragePage extends BasePage {
   private updateForm: UpdateCarForm;
 
   private startRaceButton: ButtonBuilder;
+  private resetButton: ButtonBuilder;
   private generateButton: GenerateCarsButton;
 
   private pageIndicator: ElementBuilder;
@@ -50,21 +51,33 @@ export default class GaragePage extends BasePage {
       classes: ['page-indicator'],
       content: `Page: ${this.currentPage}`,
     });
-    this.prevButton = new ButtonBuilder({
-      text: 'Prev',
-      classes: ['pagination-btn'],
-      event: { type: 'click', handler: () => this.changePage(this.currentPage - 1) },
-    });
-    this.nextButton = new ButtonBuilder({
-      text: 'Next',
-      classes: ['pagination-btn'],
-      event: { type: 'click', handler: () => this.changePage(this.currentPage + 1) },
+    this.prevButton = new ButtonBuilder({ text: 'Prev', classes: ['pagination-btn'] });
+    this.nextButton = new ButtonBuilder({ text: 'Next', classes: ['pagination-btn'] });
+
+    this.startRaceButton = new ButtonBuilder({ text: 'Start Race', classes: ['start-race-btn'] });
+    this.resetButton = new ButtonBuilder({
+      text: 'Reset Race',
+      classes: ['reset-race-btn'],
+      disabled: true,
     });
 
     this.track = new ElementBuilder({ id: 'track', classes: ['track'] });
 
-    this.startRaceButton = new ButtonBuilder({ text: 'Start Race', classes: ['start-race-btn'] });
+    this.render();
+  }
+
+  public render(): void {
+    this.prevButton.addEvent({
+      type: 'click',
+      handler: () => this.changePage(this.currentPage - 1),
+    });
+    this.nextButton.addEvent({
+      type: 'click',
+      handler: () => this.changePage(this.currentPage + 1),
+    });
+
     this.startRaceButton.addEvent({ type: 'click', handler: () => this.handleStartRace() });
+    this.resetButton.addEvent({ type: 'click', handler: () => this.handleResetRace() });
 
     raceState.subscribe((racing) => {
       this.winnersButton.setDisabled(racing);
@@ -74,38 +87,27 @@ export default class GaragePage extends BasePage {
       this.nextButton.setDisabled(racing || this.currentPage * this.limit >= this.totalCars);
     });
 
-    this.loadCars();
-
-    this.render();
-  }
-
-  public render(): void {
     this.root.addChild(
       this.title,
       this.winnersButton,
       this.createForm,
       this.updateForm,
       this.startRaceButton,
+      this.resetButton,
       this.generateButton,
       this.pageIndicator,
       this.prevButton,
       this.nextButton,
       this.track
     );
-  }
-
-  private changePage(page: number) {
-    if (page < 1) return;
-
-    this.currentPage = page;
-
-    console.log(this.currentPage);
 
     this.loadCars();
   }
 
   private async loadCars(page: number = this.currentPage, limit: number = this.limit) {
     try {
+      this.cars = [];
+
       const queryParams: QueryParam[] = [
         { key: '_page', value: page.toString() },
         { key: '_limit', value: limit.toString() },
@@ -127,30 +129,52 @@ export default class GaragePage extends BasePage {
     }
   }
 
-  private async handleStartRace() {
-    if (raceState.getRacing()) return;
-
-    raceState.setRacing(true);
-
-    const promises = this.cars.map((car) => {
-      const distance = this.track.getOffsetWidth() - car.getOffsetWidth();
-      return startRace(car, distance);
-    });
-
-    await Promise.all(promises);
-  }
-
   private addCarToTrack(car: CarOptions): void {
     const carContainer = new CarContainer(car, (container) => this.updateForm.setCar(container));
 
-    carContainer.onDeleted = () => this.handleCarDeleted(carContainer);
+    const carId = carContainer.getCar().getInfo().id;
+    carContainer.onDeleted = () => this.handleCarDeleted(carId);
+
+    if (this.track.getChildCount() === this.limit) return;
 
     this.track.addChild(carContainer.getElement());
 
     this.cars.push(carContainer.getCar());
   }
 
-  private async handleCarCreated(car: CarOptions) {
+  private async handleStartRace() {
+    if (raceState.getRacing()) return;
+
+    raceState.setRacing(true);
+
+    try {
+      const promises = this.cars.map((car) => {
+        const distance = this.track.getOffsetWidth() - car.getOffsetWidth();
+        return startRace(car, distance);
+      });
+
+      await Promise.all(promises);
+    } finally {
+      this.resetButton.setDisabled(false);
+    }
+  }
+
+  private handleResetRace() {
+    raceState.setRacing(false);
+    this.resetButton.setDisabled(true);
+
+    this.cars.forEach((car) => car.reset());
+  }
+
+  private changePage(page: number) {
+    if (page < 1) return;
+
+    this.currentPage = page;
+
+    this.loadCars();
+  }
+
+  private handleCarCreated(car: CarOptions) {
     this.totalCars += 1;
 
     this.title.setContent(`Garage (${this.totalCars})`);
@@ -159,8 +183,8 @@ export default class GaragePage extends BasePage {
     this.addCarToTrack(car);
   }
 
-  public handleCarDeleted(carContainer: CarContainer): void {
-    this.cars = this.cars.filter((car) => car !== carContainer.getCar());
+  private handleCarDeleted(carId: number): void {
+    this.cars = this.cars.filter((car) => car.getInfo().id !== carId);
 
     this.totalCars -= 1;
     this.title.setContent(`Garage (${this.totalCars})`);
