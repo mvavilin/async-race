@@ -1,4 +1,5 @@
 import NavButton from '@components/buttons/NavButton';
+import GenerateCarsButton from '@components/buttons/GenerateCarsButton';
 import {
   DeleteCarButton,
   SelectCarButton,
@@ -24,4 +25,5 @@ export {
   UpdateCarForm,
   ColorInput,
   TextInput,
+  GenerateCarsButton,
 };

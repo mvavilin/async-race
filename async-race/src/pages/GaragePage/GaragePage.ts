@@ -1,6 +1,12 @@
 import { BasePage } from '@pages';
 import { ElementBuilder, ButtonBuilder, getErrorMessageFromError } from '@utils';
-import { CreateCarForm, UpdateCarForm, NavButton, CarContainer } from '@components';
+import {
+  CreateCarForm,
+  UpdateCarForm,
+  NavButton,
+  CarContainer,
+  GenerateCarsButton,
+} from '@components';
 import { RoutePath } from '@types';
 import type { CarOptions, QueryParam } from '@types';
 import { getCars } from '@api/garage';
@@ -12,6 +18,8 @@ export default class GaragePage extends BasePage {
 
   private createForm: CreateCarForm;
   private updateForm: UpdateCarForm;
+
+  private generateButton: GenerateCarsButton;
 
   private pageIndicator: ElementBuilder;
   private currentPage = 1;
@@ -30,8 +38,10 @@ export default class GaragePage extends BasePage {
     this.createForm = new CreateCarForm({ onCreated: (car) => this.handleCarCreated(car) });
     this.updateForm = new UpdateCarForm({ onUpdated: (car) => car });
 
+    this.generateButton = new GenerateCarsButton(() => this.loadCars());
+
     this.pageIndicator = new ElementBuilder({
-      tag: 'span',
+      tag: 'p',
       classes: ['page-indicator'],
       content: `Page: ${this.currentPage}`,
     });
@@ -53,6 +63,7 @@ export default class GaragePage extends BasePage {
       this.winnersButton,
       this.createForm,
       this.updateForm,
+      this.generateButton,
       this.pageIndicator,
       this.prevButton,
       this.nextButton,
