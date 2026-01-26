@@ -11,6 +11,7 @@ import {
 import { RoutePath } from '@types';
 import type { CarOptions, QueryParam } from '@types';
 import { getCars } from '@api/garage';
+import { getWinner, updateWinner, createWinner } from '@api/winners';
 import { raceState } from '@state/RaceState';
 
 export default class GaragePage extends BasePage {
@@ -161,8 +162,41 @@ export default class GaragePage extends BasePage {
         const distance = this.track.getOffsetWidth() - car.getOffsetWidth();
         return startRace(car, distance);
       });
+      const results = await Promise.all(promises);
 
-      await Promise.all(promises);
+      const finished = results.filter((result) => result !== null);
+      if (finished.length === 0) return;
+
+      const winner = finished.reduce((previousValue, currentValue) =>
+        currentValue.duration < previousValue.duration ? currentValue : previousValue
+      );
+
+      const winnerCar = winner.car;
+      const winnerData = {
+        id: winnerCar.getInfo().id,
+        wins: 1,
+        time: Number(winner.duration.toFixed(2)),
+      };
+
+      const winnerNameElement = new ElementBuilder({
+        tag: 'div',
+        content: `Winner: ${winnerCar.getInfo().name}`,
+        classes: ['winner-name'],
+      });
+
+      this.track.addChild(winnerNameElement);
+
+      setTimeout(() => {
+        winnerNameElement.remove();
+      }, 5000);
+
+      const existingWinner = await getWinner(winnerData.id);
+
+      if (existingWinner) {
+        const updatedWins = existingWinner.wins + 1;
+        const bestTime = Math.min(existingWinner.time, winnerData.time);
+        await updateWinner(winnerData.id, { wins: updatedWins, time: bestTime });
+      } else await createWinner(winnerData);
     } finally {
       this.resetButton.setDisabled(false);
     }

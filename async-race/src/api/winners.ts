@@ -6,7 +6,7 @@ export const getWinners = async (
   queryParams: QueryParam[] = []
 ): Promise<{ items: WinnerOptions[]; count: number }> => {
   const response = await fetch(`${BASE_URL}${ApiPath.WINNERS}${generateQueryString(queryParams)}`);
-  
+
   switch (response.status) {
     case 200: {
       const items: WinnerOptions[] = await response.json();
@@ -68,7 +68,7 @@ export const updateWinner = async (
 
 export const deleteWinner = async (winnerId: number): Promise<null> => {
   const response = await fetch(`${BASE_URL}${ApiPath.WINNERS}/${winnerId}`, { method: 'DELETE' });
-  
+
   switch (response.status) {
     case 200:
     case 404:

@@ -17,7 +17,7 @@ import type {
   InputType,
   CarListener,
   RaceStateListener,
-  WinnerOptions
+  WinnerOptions,
 } from '@/types/types';
 import { RoutePath, ApiPath, CarStatus } from '@/types/enums';
 
@@ -38,6 +38,6 @@ export type {
   CreateCarFormProps,
   CarListener,
   RaceStateListener,
-  WinnerOptions
+  WinnerOptions,
 };
 export { RoutePath, ApiPath, CarStatus };

@@ -20,14 +20,17 @@ export const getRandomColor: () => string = () =>
     .toString(16)
     .padStart(6, '0')}`;
 
-export async function startRace(car: Car, distance: number): Promise<void> {
-  if (car.isInit() === false) return;
+export async function startRace(
+  car: Car,
+  distance: number
+): Promise<{ car: Car; duration: number } | null> {
+  if (car.isInit() === false) return null;
 
   car.start();
 
   try {
     const startResponse = await startEngine(car.getInfo().id);
-    if (startResponse.velocity === undefined) return;
+    if (startResponse.velocity === undefined) return { car, duration: 0 };
 
     const duration = distance / startResponse.velocity;
     car.drive(distance, duration);
@@ -35,7 +38,10 @@ export async function startRace(car: Car, distance: number): Promise<void> {
     await driveEngine(car.getInfo().id);
 
     car.finish();
+
+    return { car, duration };
   } catch {
     car.break();
+    return null;
   }
 }
