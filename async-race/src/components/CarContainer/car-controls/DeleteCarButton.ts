@@ -27,6 +27,8 @@ export default class DeleteCarButton extends ButtonBuilder {
     try {
       await deleteCar(carId);
       this.carContainer.remove();
+
+      if (this.carContainer.onDeleted) this.carContainer.onDeleted();
     } catch (error: unknown) {
       throw new Error(getErrorMessageFromError(error));
     } finally {
