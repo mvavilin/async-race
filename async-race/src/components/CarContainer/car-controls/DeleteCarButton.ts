@@ -16,6 +16,7 @@ export default class DeleteCarButton extends ButtonBuilder {
 
     this.carContainer = carContainer;
 
+    this.carContainer.onDeleteRestore(() => this.setDisabled(false));
     this.carSubscribe();
   }
 

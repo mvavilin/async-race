@@ -34,6 +34,7 @@ export default class GaragePage extends BasePage {
   private limit = 7;
 
   private cars: Car[] = [];
+  private lastSelectedCarContainer: CarContainer | null = null;
 
   constructor() {
     super();
@@ -130,7 +131,15 @@ export default class GaragePage extends BasePage {
   }
 
   private addCarToTrack(car: CarOptions): void {
-    const carContainer = new CarContainer(car, (container) => this.updateForm.setCar(container));
+    const carContainer = new CarContainer(car, (container) => {
+      if (this.lastSelectedCarContainer && this.lastSelectedCarContainer !== container) {
+        this.lastSelectedCarContainer.restoreDelete();
+      }
+
+      this.lastSelectedCarContainer = container;
+
+      return this.updateForm.setCar(container);
+    });
 
     const carId = carContainer.getCar().getInfo().id;
     carContainer.onDeleted = () => this.handleCarDeleted(carId);

@@ -25,6 +25,7 @@ export default class SelectCarButton extends ButtonBuilder {
   }
 
   private handleClick = (): void => {
+    this.carContainer.setDeleteButtonDisabled(true);
     this.onSelect(this.carContainer);
   };
 }

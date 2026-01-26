@@ -63,6 +63,7 @@ export default class UpdateCarButton extends ButtonBuilder {
       if (updateCarResponse === null) return;
       this.onUpdated(updateCarResponse);
       this.carContainer.update(updateCarResponse);
+      this.carContainer.setDeleteButtonDisabled(false);
 
       this.carForm.clear();
     } catch (error: unknown) {

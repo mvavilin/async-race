@@ -20,6 +20,7 @@ export default class CarContainer {
   private onSelect: (carContainer: CarContainer) => void;
 
   public onDeleted?: () => void;
+  private deleteRestoreCallbacks: (() => void)[] = [];
 
   constructor({ id, name, color }: CarOptions, onSelect: (car: CarContainer) => void) {
     this.onSelect = onSelect;
@@ -58,5 +59,17 @@ export default class CarContainer {
 
   public remove() {
     this.carContainer.getElement().remove();
+  }
+
+  public onDeleteRestore(callback: () => void) {
+    this.deleteRestoreCallbacks.push(callback);
+  }
+
+  public restoreDelete() {
+    this.deleteRestoreCallbacks.forEach((callback) => callback());
+  }
+
+  public setDeleteButtonDisabled(disabled: boolean) {
+    this.deleteCarButton.setDisabled(disabled);
   }
 }
