@@ -37,7 +37,7 @@ export default class GaragePage extends BasePage {
 
     this.track = new ElementBuilder({ id: 'track', classes: ['track'] });
     // TODO
-    const car: CarOptions = { name: 'Tesla', color: '#515188', id: 1 };
+    const car: CarOptions = { name: 'Tesla', color: '#515188', id: 2 };
     //
     this.carContainer = new CarContainer(car, (carContainer) =>
       this.updateForm.setCar(carContainer)

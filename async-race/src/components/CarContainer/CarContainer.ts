@@ -6,6 +6,7 @@ import {
   StartEngineButton,
   StopEngineButton,
   SelectCarButton,
+  DeleteCarButton
 } from '@components/CarContainer';
 
 export default class CarContainer {
@@ -15,6 +16,7 @@ export default class CarContainer {
   private startButton: StartEngineButton;
   private stopButton: StopEngineButton;
   private selectCarButton: SelectCarButton;
+  private deleteCarButton: DeleteCarButton;
   private onSelect: (carContainer: CarContainer) => void;
 
   constructor({ id, name, color }: CarOptions, onSelect: (car: CarContainer) => void) {
@@ -28,12 +30,14 @@ export default class CarContainer {
     this.startButton = new StartEngineButton(this.car, this.carContainer);
     this.stopButton = new StopEngineButton(this.car);
     this.selectCarButton = new SelectCarButton(this, this.onSelect);
+    this.deleteCarButton = new DeleteCarButton(this);
 
     this.carContainer.addChild(
       this.title,
       this.startButton,
       this.stopButton,
       this.selectCarButton,
+      this.deleteCarButton,
       this.car.getCar()
     );
   }
@@ -49,5 +53,9 @@ export default class CarContainer {
   public update({ name, color }: Omit<CarOptions, 'id'>) {
     if (name) this.title.setContent(name);
     if (color) this.car.updateInfo({ name, color });
+  }
+
+  public remove() {
+    this.carContainer.getElement().remove();
   }
 }
