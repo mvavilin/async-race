@@ -16,3 +16,13 @@ export enum CarStatus {
   BROKEN = 'broken',
   FINISHED = 'finished',
 }
+
+export enum WinnerSortField {
+  WINS = 'wins',
+  TIME = 'time',
+}
+
+export enum SortOrder {
+  ASC = 'ASC',
+  DESC = 'DESC',
+}

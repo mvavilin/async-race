@@ -1,0 +1,21 @@
+.winner-name {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 24px;
+  font-weight: bold;
+  color: var(--color-white);
+  background-color: var(--color-primary);
+  padding: 10px;
+  border-radius: 4px;
+}
+
+.car-icon {
+  width: 40px;
+  height: 20px;
+
+  mask: url('../../assets/car.svg') no-repeat center/cover;
+
+  background-color: var(--color-black);
+}

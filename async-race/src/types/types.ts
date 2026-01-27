@@ -1,5 +1,5 @@
 import { BasePage } from '@pages';
-import { RoutePath, CarStatus } from '@types';
+import { RoutePath, CarStatus, WinnerSortField } from '@types';
 
 export type Route = {
   path: RoutePath;
@@ -21,6 +21,16 @@ export type WinnerOptions = {
   id: number;
   wins: number;
   time: number;
+};
+
+export type WinnerUIOptions = WinnerOptions & {
+  name: string;
+  color: string;
+};
+
+export type Column = {
+  label: string;
+  field?: WinnerSortField;
 };
 
 export type ButtonType = HTMLButtonElement['type'];

@@ -96,16 +96,3 @@ body {
   border-color: var(--color-error);
   box-shadow: 0 0 0 2px var(--color-error-focus);
 }
-
-.winner-name {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 24px;
-  font-weight: bold;
-  color: var(--color-white);
-  background-color: var(--color-primary);
-  padding: 10px;
-  border-radius: 4px;
-}

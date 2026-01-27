@@ -3,6 +3,7 @@ import { deleteCar } from '@api/garage';
 import { getErrorMessageFromError } from '@utils/api';
 import type { CarContainer } from '@components/CarContainer';
 import { raceState } from '@state/RaceState';
+import { getWinner, deleteWinner } from '@api/winners';
 
 export default class DeleteCarButton extends ButtonBuilder {
   private carContainer: CarContainer;
@@ -42,6 +43,9 @@ export default class DeleteCarButton extends ButtonBuilder {
     try {
       await deleteCar(carId);
       this.carContainer.remove();
+
+      const existingWinner = await getWinner(carId);
+      if (existingWinner) await deleteWinner(carId);
 
       if (this.carContainer.onDeleted) this.carContainer.onDeleted();
     } catch (error: unknown) {
