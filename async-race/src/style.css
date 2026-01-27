@@ -20,6 +20,14 @@
 
   --color-error: #fca5a5;
   --color-error-focus: rgba(252, 165, 165, 0.35);
+
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+
+  --font-size-base: 14px;
+  --font-size-button: 12px;
+  --border-radius-base: 4px;
 }
 
 * {
@@ -33,19 +41,36 @@ body {
   background-color: var(--color-bg);
 }
 
+h1 {
+  margin-top: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+
+  font-size: 24px;
+}
+
+h3 {
+  margin-top: 0;
+  margin-bottom: var(--spacing-sm);
+
+  font-size: var(--font-size-base);
+}
+
+p {
+  margin-top: 0;
+  margin-bottom: var(--spacing-sm);
+}
+
 .btn {
   display: inline-block;
-  padding: 0.5rem 1rem;
-  font-size: 1rem;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  font-size: var(--font-size-button);
   font-weight: 500;
   color: var(--color-bg);
   background-color: var(--color-primary);
   border: 1px solid var(--color-primary);
-  border-radius: 4px;
+  border-radius: var(--border-radius-base);
   cursor: pointer;
-  transition:
-    background-color 0.2s ease,
-    transform 0.1s ease;
+  transition: background-color 0.2s ease, transform 0.1s ease;
   text-align: center;
   text-decoration: none;
 }
@@ -72,9 +97,7 @@ body {
   border: 1px solid var(--color-border);
   border-radius: 4px;
   outline: none;
-  transition:
-    border-color 0.2s,
-    box-shadow 0.2s;
+  transition: border-color 0.2s, box-shadow 0.2s;
   background-color: var(--color-bg);
   color: var(--color-text);
 }
@@ -95,4 +118,55 @@ body {
 .input-error {
   border-color: var(--color-error);
   box-shadow: 0 0 0 2px var(--color-error-focus);
+}
+
+#car-id {
+  display: none;
+}
+
+.form {
+  display: flex;
+  column-gap: var(--spacing-sm);
+
+  margin-bottom: var(--spacing-sm);
+}
+
+.nav-btn {
+  margin-bottom: var(--spacing-sm);
+}
+
+.create-car-btn,
+.update-car-btn {
+  width: 100%;
+  max-width: 80px;
+}
+
+.start-race-btn,
+.reset-race-btn,
+.generate-cars-btn {
+  margin-right: var(--spacing-sm);
+  margin-bottom: var(--spacing-sm);
+}
+
+.pagination-btn,
+.pagination-btn {
+  margin-right: var(--spacing-sm);
+  margin-bottom: var(--spacing-sm);
+}
+
+.start-engine-btn,
+.stop-engine-btn,
+.select-car-btn,
+.delete-car-btn {
+  margin-right: var(--spacing-sm);
+  margin-bottom: var(--spacing-sm);
+}
+
+tr,
+td {
+  padding: var(--spacing-sm);
+}
+
+table {
+  border: 1px solid var(--color-black);
 }

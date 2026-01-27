@@ -34,8 +34,8 @@ export default class WinnersPage extends BasePage {
       classes: ['page-indicator'],
       content: `Page: ${this.currentPage}`,
     });
-    this.prevButton = new ButtonBuilder({ text: 'Prev' });
-    this.nextButton = new ButtonBuilder({ text: 'Next' });
+    this.prevButton = new ButtonBuilder({ text: 'Prev', classes: ['pagination-btn'] });
+    this.nextButton = new ButtonBuilder({ text: 'Next', classes: ['pagination-btn'] });
     this.refreshButton = new ButtonBuilder({ text: 'Refresh Table' });
 
     this.prevButton.addEvent({
@@ -49,8 +49,8 @@ export default class WinnersPage extends BasePage {
     this.refreshButton.addEvent({ type: 'click', handler: () => this.loadWinners() });
 
     this.root.addChild(
-      this.garageButton,
       this.title,
+      this.garageButton,
       this.pageIndicator,
       this.prevButton,
       this.nextButton,
@@ -73,7 +73,7 @@ export default class WinnersPage extends BasePage {
 
     const { items, count } = await getWinners(query);
     this.totalWinners = count;
-    this.title.setContent(`Winners (${count})`)
+    this.title.setContent(`Winners (${count})`);
     this.winners = await Promise.all(
       items.map(async (winner) => {
         const car = await getCar(winner.id);
