@@ -3,7 +3,7 @@ import TextInput from '@components/inputs/TextInput/TextInput';
 import ColorInput from '@components/inputs/ColorInput/ColorInput';
 import CreateCarButton from '@components/forms/CreateCarForm/CreateCarButton';
 import type { CreateCarFormProps } from '@types';
-import { COLOR_CODES } from '@/constants';
+import { COLOR_CODES } from '@/constants/constants';
 
 export default class CreateCarForm extends ElementBuilder {
   private nameInput: TextInput;

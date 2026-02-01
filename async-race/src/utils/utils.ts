@@ -1,4 +1,4 @@
-import { CAR_NAMES } from '@/constants';
+import { CAR_NAMES } from '@/constants/constants';
 import { startEngine, driveEngine } from '@api/engine';
 import { Car } from '@components/CarContainer';
 

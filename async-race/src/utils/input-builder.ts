@@ -1,6 +1,6 @@
 import ElementBuilder from '@utils/element-builder';
 import type { InputBuilderOptions, InputType } from '@types';
-import { COLOR_CODES } from '@/constants';
+import { COLOR_CODES } from '@/constants/constants';
 
 export default class InputBuilder extends ElementBuilder {
   constructor({
@@ -10,7 +10,7 @@ export default class InputBuilder extends ElementBuilder {
     type = 'text',
     placeholder = '',
     disabled = false,
-    event = { type: 'input', handler: () => {} },
+    event = { type: 'input', handler: () => { } },
   }: InputBuilderOptions = {}) {
     super({ tag: 'input', id, classes: ['input', ...classes], event });
 

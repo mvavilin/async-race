@@ -1,5 +1,5 @@
 import { ApiPath, HttpStatus, type QueryParam, type CarOptions } from '@types';
-import { BASE_URL } from '@/constants';
+import { BASE_URL } from '@/constants/constants';
 import { generateQueryString, getErrorMessage } from '@utils/api';
 
 export const getCars = async (

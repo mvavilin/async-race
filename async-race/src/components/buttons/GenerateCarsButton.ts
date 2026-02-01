@@ -2,7 +2,7 @@ import ButtonBuilder from '@utils/button-builder';
 import { createCar } from '@api/garage';
 import { getRandomName, getRandomColor } from '@utils';
 import type { CarOptions } from '@types';
-import { GENERATED_CARS_COUNT } from '@/constants';
+import { GENERATED_CARS_COUNT } from '@/constants/constants';
 
 export default class GenerateCarsButton extends ButtonBuilder {
   constructor(private onGenerated: () => void) {

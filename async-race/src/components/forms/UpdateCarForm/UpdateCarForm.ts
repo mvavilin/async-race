@@ -4,7 +4,7 @@ import ColorInput from '@components/inputs/ColorInput/ColorInput';
 import UpdateCarButton from '@components/forms/UpdateCarForm/UpdateCarButton';
 import type { CarOptions, UpdateCarFormProps } from '@types';
 import type { Car, CarContainer } from '@components/CarContainer';
-import { COLOR_CODES } from '@/constants';
+import { COLOR_CODES } from '@/constants/constants';
 
 export default class UpdateCarForm extends ElementBuilder {
   private idInput: TextInput;

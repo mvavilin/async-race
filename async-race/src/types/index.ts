@@ -28,7 +28,7 @@ import {
   WinnerSortField,
   SortOrder,
   EngineStatus,
-  HttpStatus
+  HttpStatus,
 } from '@/types/enums';
 
 export type {

@@ -13,7 +13,7 @@ import type { CarOptions, QueryParam } from '@types';
 import { getCars } from '@api/garage';
 import { getWinner, updateWinner, createWinner } from '@api/winners';
 import { raceState } from '@state/RaceState';
-import { WINNER_MESSAGE_DURATION_MS, GARAGE_PAGE_LIMIT, QUERY_PARAMS } from '@/constants';
+import { WINNER_MESSAGE_DURATION_MS, GARAGE_PAGE_LIMIT, QUERY_PARAMS } from '@/constants/constants';
 
 export default class GaragePage extends BasePage {
   private winnersButton: NavButton;

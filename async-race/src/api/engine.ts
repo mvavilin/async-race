@@ -1,5 +1,5 @@
 import { ApiPath, HttpStatus, type QueryParam, type EngineResponse, EngineStatus } from '@types';
-import { BASE_URL, QUERY_PARAMS } from '@/constants';
+import { BASE_URL, QUERY_PARAMS } from '@/constants/constants';
 import { generateQueryString, getErrorMessage } from '@utils/api';
 
 const setEngineStatus = async (queryParams: QueryParam[] = []): Promise<EngineResponse> => {

@@ -1,4 +1,4 @@
-import { routes } from '@/constants';
+import { routes } from '@/constants/constants';
 import { NotFoundPage } from '@pages';
 import { RoutePath, type Route } from '@types';
 

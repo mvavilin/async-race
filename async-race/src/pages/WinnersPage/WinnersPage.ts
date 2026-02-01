@@ -7,8 +7,8 @@ import type { WinnerUIOptions, QueryParam, Column } from '@types';
 import { getWinners } from '@api/winners';
 import { getCar } from '@api/garage';
 import { NavButton } from '@components';
-import { COLOR_CODES } from '@/constants';
-import { WINNERS_PAGE_LIMIT, QUERY_PARAMS } from '@/constants';
+import { COLOR_CODES } from '@/constants/constants';
+import { WINNERS_PAGE_LIMIT, QUERY_PARAMS } from '@/constants/constants';
 
 export default class WinnersPage extends BasePage {
   private garageButton: ButtonBuilder;

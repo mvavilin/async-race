@@ -1,7 +1,7 @@
 import '@components/CarContainer/Car/Car.css';
 import ElementBuilder from '@utils/element-builder';
 import { CarStatus, type CarOptions, type CarListener } from '@types';
-import { COLOR_CODES } from '@/constants';
+import { COLOR_CODES } from '@/constants/constants';
 
 export default class Car {
   private car: ElementBuilder;
