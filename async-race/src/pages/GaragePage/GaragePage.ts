@@ -13,6 +13,7 @@ import type { CarOptions, QueryParam } from '@types';
 import { getCars } from '@api/garage';
 import { getWinner, updateWinner, createWinner } from '@api/winners';
 import { raceState } from '@state/RaceState';
+import { WINNER_MESSAGE_DURATION_MS, GARAGE_PAGE_LIMIT  } from '@/constants';
 
 export default class GaragePage extends BasePage {
   private winnersButton: NavButton;
@@ -32,7 +33,7 @@ export default class GaragePage extends BasePage {
   private nextButton: ButtonBuilder;
 
   private track: ElementBuilder;
-  private limit = 7;
+  private limit = GARAGE_PAGE_LIMIT;
 
   private cars: Car[] = [];
   private lastSelectedCarContainer: CarContainer | null = null;
@@ -188,7 +189,7 @@ export default class GaragePage extends BasePage {
 
       setTimeout(() => {
         winnerNameElement.remove();
-      }, 5000);
+      }, WINNER_MESSAGE_DURATION_MS);
 
       const existingWinner = await getWinner(winnerData.id);
 

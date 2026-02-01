@@ -21,7 +21,10 @@ export default class UpdateCarForm extends ElementBuilder {
       placeholder: 'New car name',
       disabled: true,
     });
-    this.colorInput = new ColorInput({ value: COLOR_CODES.DEFAULT_CAR_COLOR_UPDATE, disabled: true });
+    this.colorInput = new ColorInput({
+      value: COLOR_CODES.DEFAULT_CAR_COLOR_UPDATE,
+      disabled: true,
+    });
 
     this.updateButton = new UpdateCarButton({
       carContainer: undefined,

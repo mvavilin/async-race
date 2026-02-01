@@ -10,7 +10,12 @@ export const COLOR_CODES = {
   DEFAULT_CAR_COLOR_UPDATE: '#00ff00',
   DEFAULT_COLOR_INPUT: '#000000',
   DEFAULT_FALLBACK_COLOR: '#000000',
-}
+};
+
+export const WINNER_MESSAGE_DURATION_MS = 5000;
+export const GENERATED_CARS_COUNT = 100;
+export const GARAGE_PAGE_LIMIT = 7;
+export const WINNERS_PAGE_LIMIT = 10;
 
 export const routes: Route[] = [
   { path: RoutePath.GARAGE, component: new GaragePage() },

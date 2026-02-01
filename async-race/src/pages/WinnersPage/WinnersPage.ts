@@ -8,6 +8,8 @@ import { getWinners } from '@api/winners';
 import { getCar } from '@api/garage';
 import { NavButton } from '@components';
 import { COLOR_CODES } from '@/constants';
+import { WINNERS_PAGE_LIMIT } from '@/constants';
+
 
 export default class WinnersPage extends BasePage {
   private garageButton: ButtonBuilder;
@@ -18,7 +20,7 @@ export default class WinnersPage extends BasePage {
   private nextButton: ButtonBuilder;
   private refreshButton: ButtonBuilder;
   private currentPage = 1;
-  private limit = 10;
+  private limit = WINNERS_PAGE_LIMIT;
   private totalWinners = 0;
   private sortField: WinnerSortField | null = null;
   private sortOrder: SortOrder = SortOrder.ASC;

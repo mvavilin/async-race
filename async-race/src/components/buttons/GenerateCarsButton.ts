@@ -2,6 +2,7 @@ import ButtonBuilder from '@utils/button-builder';
 import { createCar } from '@api/garage';
 import { getRandomName, getRandomColor } from '@utils';
 import type { CarOptions } from '@types';
+import { GENERATED_CARS_COUNT } from '@/constants';
 
 export default class GenerateCarsButton extends ButtonBuilder {
   constructor(private onGenerated: () => void) {
@@ -15,7 +16,7 @@ export default class GenerateCarsButton extends ButtonBuilder {
   private handleClick: () => Promise<void> = async () => {
     this.setDisabled(true);
     try {
-      const requests: Promise<CarOptions>[] = Array.from({ length: 100 }, () =>
+      const requests: Promise<CarOptions>[] = Array.from({ length: GENERATED_CARS_COUNT }, () =>
         createCar({ name: getRandomName(), color: getRandomColor() })
       );
       await Promise.all(requests);
