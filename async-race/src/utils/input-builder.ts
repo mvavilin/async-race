@@ -1,5 +1,6 @@
 import ElementBuilder from '@utils/element-builder';
 import type { InputBuilderOptions, InputType } from '@types';
+import { COLOR_CODES } from '@/constants';
 
 export default class InputBuilder extends ElementBuilder {
   constructor({
@@ -49,7 +50,7 @@ export default class InputBuilder extends ElementBuilder {
     const input = this.getElement();
     if (input instanceof HTMLInputElement) {
       if (input.type === 'color') {
-        input.value = '#000000';
+        input.value = COLOR_CODES.DEFAULT_COLOR_INPUT;
       } else {
         input.value = '';
       }

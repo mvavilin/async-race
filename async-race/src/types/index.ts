@@ -20,9 +20,15 @@ import type {
   WinnerOptions,
   WinnerUIOptions,
   Column,
-
 } from '@/types/types';
-import { RoutePath, ApiPath, CarStatus, WinnerSortField, SortOrder, EngineStatus } from '@/types/enums';
+import {
+  RoutePath,
+  ApiPath,
+  CarStatus,
+  WinnerSortField,
+  SortOrder,
+  EngineStatus,
+} from '@/types/enums';
 
 export type {
   ElementBuilderOptions,

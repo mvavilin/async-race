@@ -7,6 +7,7 @@ import type { WinnerUIOptions, QueryParam, Column } from '@types';
 import { getWinners } from '@api/winners';
 import { getCar } from '@api/garage';
 import { NavButton } from '@components';
+import { COLOR_CODES } from '@/constants';
 
 export default class WinnersPage extends BasePage {
   private garageButton: ButtonBuilder;
@@ -77,7 +78,7 @@ export default class WinnersPage extends BasePage {
     this.winners = await Promise.all(
       items.map(async (winner) => {
         const car = await getCar(winner.id);
-        if (car === null) return { ...winner, name: '', color: '#000000' };
+        if (car === null) return { ...winner, name: '', color: COLOR_CODES.DEFAULT_FALLBACK_COLOR };
         else return { ...winner, name: car.name, color: car.color };
       })
     );

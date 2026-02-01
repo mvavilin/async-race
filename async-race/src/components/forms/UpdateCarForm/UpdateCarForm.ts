@@ -4,6 +4,7 @@ import ColorInput from '@components/inputs/ColorInput/ColorInput';
 import UpdateCarButton from '@components/forms/UpdateCarForm/UpdateCarButton';
 import type { CarOptions, UpdateCarFormProps } from '@types';
 import type { Car, CarContainer } from '@components/CarContainer';
+import { COLOR_CODES } from '@/constants';
 
 export default class UpdateCarForm extends ElementBuilder {
   private idInput: TextInput;
@@ -20,7 +21,7 @@ export default class UpdateCarForm extends ElementBuilder {
       placeholder: 'New car name',
       disabled: true,
     });
-    this.colorInput = new ColorInput({ value: '#00ff00', disabled: true });
+    this.colorInput = new ColorInput({ value: COLOR_CODES.DEFAULT_CAR_COLOR_UPDATE, disabled: true });
 
     this.updateButton = new UpdateCarButton({
       carContainer: undefined,

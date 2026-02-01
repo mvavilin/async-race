@@ -1,6 +1,7 @@
 import '@components/CarContainer/Car/Car.css';
 import ElementBuilder from '@utils/element-builder';
 import { CarStatus, type CarOptions, type CarListener } from '@types';
+import { COLOR_CODES } from '@/constants';
 
 export default class Car {
   private car: ElementBuilder;
@@ -78,7 +79,7 @@ export default class Car {
     setTimeout(() => {
       if (this.isFinished()) {
         this.status = CarStatus.FINISHED;
-        this.car.addStyle({ backgroundColor: 'green' });
+        this.car.addStyle({ backgroundColor: COLOR_CODES.CAR_COLOR_FINISHED });
 
         this.notify();
       }
@@ -92,7 +93,7 @@ export default class Car {
     this.car.addStyle({
       left: `${this.getOffsetLeft()}px`,
       transition: 'none',
-      backgroundColor: 'red',
+      backgroundColor: COLOR_CODES.CAR_COLOR_BROKEN,
     });
 
     this.notify();

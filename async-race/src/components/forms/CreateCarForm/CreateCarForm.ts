@@ -3,6 +3,7 @@ import TextInput from '@components/inputs/TextInput/TextInput';
 import ColorInput from '@components/inputs/ColorInput/ColorInput';
 import CreateCarButton from '@components/forms/CreateCarForm/CreateCarButton';
 import type { CreateCarFormProps } from '@types';
+import { COLOR_CODES } from '@/constants';
 
 export default class CreateCarForm extends ElementBuilder {
   private nameInput: TextInput;
@@ -13,7 +14,7 @@ export default class CreateCarForm extends ElementBuilder {
     super({ tag: 'form', classes: ['form', 'car-create-form'] });
 
     this.nameInput = new TextInput({ id: 'car-name', placeholder: 'Car name' });
-    this.colorInput = new ColorInput({ value: '#0000ff' });
+    this.colorInput = new ColorInput({ value: COLOR_CODES.DEFAULT_CAR_COLOR_CREATE });
 
     this.createButton = new CreateCarButton({
       carForm: {
