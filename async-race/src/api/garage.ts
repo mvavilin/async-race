@@ -1,4 +1,4 @@
-import { ApiPath, type QueryParam, type CarOptions } from '@types';
+import { ApiPath, HttpStatus, type QueryParam, type CarOptions } from '@types';
 import { BASE_URL } from '@/constants';
 import { generateQueryString, getErrorMessage } from '@utils/api';
 
@@ -8,7 +8,7 @@ export const getCars = async (
   const response = await fetch(`${BASE_URL}${ApiPath.GARAGE}${generateQueryString(queryParams)}`);
 
   switch (response.status) {
-    case 200: {
+    case HttpStatus.OK: {
       const items: CarOptions[] = await response.json();
       const count: number = Number(response.headers.get('X-Total-Count'));
       return { items, count };
@@ -22,9 +22,9 @@ export const getCar = async (carId: number): Promise<CarOptions | null> => {
   const response = await fetch(`${BASE_URL}${ApiPath.GARAGE}/${carId}`);
 
   switch (response.status) {
-    case 200:
+    case HttpStatus.OK:
       return await response.json();
-    case 404:
+    case HttpStatus.NOT_FOUND:
       return null;
     default:
       throw new Error(getErrorMessage(response));
@@ -39,7 +39,7 @@ export const createCar = async (carData: Omit<CarOptions, 'id'>): Promise<CarOpt
   });
 
   switch (response.status) {
-    case 201:
+    case HttpStatus.CREATED:
       return await response.json();
     default:
       throw new Error(getErrorMessage(response));
@@ -57,9 +57,9 @@ export const updateCar = async (
   });
 
   switch (response.status) {
-    case 200:
+    case HttpStatus.OK:
       return await response.json();
-    case 404:
+    case HttpStatus.NOT_FOUND:
       return null;
     default:
       throw new Error(getErrorMessage(response));
@@ -72,8 +72,8 @@ export const deleteCar = async (carId: number): Promise<null> => {
   });
 
   switch (response.status) {
-    case 200:
-    case 404:
+    case HttpStatus.OK:
+    case HttpStatus.NOT_FOUND:
       return null;
     default:
       throw new Error(getErrorMessage(response));

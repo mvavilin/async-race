@@ -1,5 +1,5 @@
-import { ApiPath, type QueryParam, type EngineResponse, EngineStatus } from '@types';
-import { BASE_URL } from '@/constants';
+import { ApiPath, HttpStatus, type QueryParam, type EngineResponse, EngineStatus } from '@types';
+import { BASE_URL, QUERY_PARAMS } from '@/constants';
 import { generateQueryString, getErrorMessage } from '@utils/api';
 
 const setEngineStatus = async (queryParams: QueryParam[] = []): Promise<EngineResponse> => {
@@ -8,12 +8,12 @@ const setEngineStatus = async (queryParams: QueryParam[] = []): Promise<EngineRe
   });
 
   switch (response.status) {
-    case 200:
+    case HttpStatus.OK:
       return await response.json();
-    case 400:
-    case 404:
-    case 429:
-    case 500:
+    case HttpStatus.BAD_REQUEST:
+    case HttpStatus.NOT_FOUND:
+    case HttpStatus.TOO_MANY_REQUESTS:
+    case HttpStatus.INTERNAL_SERVER_ERROR:
       throw new Error(getErrorMessage(response));
     default:
       throw new Error(getErrorMessage(response));
@@ -22,18 +22,18 @@ const setEngineStatus = async (queryParams: QueryParam[] = []): Promise<EngineRe
 
 export const startEngine = (id: number): Promise<EngineResponse> =>
   setEngineStatus([
-    { key: 'id', value: `${id}` },
-    { key: 'status', value: EngineStatus.STARTED },
+    { key: QUERY_PARAMS.ID, value: `${id}` },
+    { key: QUERY_PARAMS.STATUS, value: EngineStatus.STARTED },
   ]);
 
 export const stopEngine = (id: number): Promise<EngineResponse> =>
   setEngineStatus([
-    { key: 'id', value: `${id}` },
-    { key: 'status', value: EngineStatus.STOPPED },
+    { key: QUERY_PARAMS.ID, value: `${id}` },
+    { key: QUERY_PARAMS.STATUS, value: EngineStatus.STOPPED },
   ]);
 
 export const driveEngine = (id: number): Promise<EngineResponse> =>
   setEngineStatus([
-    { key: 'id', value: `${id}` },
-    { key: 'status', value: EngineStatus.DRIVE },
+    { key: QUERY_PARAMS.ID, value: `${id}` },
+    { key: QUERY_PARAMS.STATUS, value: EngineStatus.DRIVE },
   ]);

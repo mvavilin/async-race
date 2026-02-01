@@ -8,8 +8,7 @@ import { getWinners } from '@api/winners';
 import { getCar } from '@api/garage';
 import { NavButton } from '@components';
 import { COLOR_CODES } from '@/constants';
-import { WINNERS_PAGE_LIMIT } from '@/constants';
-
+import { WINNERS_PAGE_LIMIT, QUERY_PARAMS } from '@/constants';
 
 export default class WinnersPage extends BasePage {
   private garageButton: ButtonBuilder;
@@ -66,8 +65,8 @@ export default class WinnersPage extends BasePage {
 
   public async loadWinners() {
     const query: QueryParam[] = [
-      { key: '_page', value: `${this.currentPage}` },
-      { key: '_limit', value: `${this.limit}` },
+      { key: QUERY_PARAMS.PAGE, value: `${this.currentPage}` },
+      { key: QUERY_PARAMS.LIMIT, value: `${this.limit}` },
     ];
 
     if (this.sortField) {

@@ -1,4 +1,4 @@
-import { ApiPath, type QueryParam, type WinnerOptions } from '@types';
+import { ApiPath, HttpStatus, type QueryParam, type WinnerOptions } from '@types';
 import { BASE_URL } from '@/constants';
 import { generateQueryString, getErrorMessage } from '@utils/api';
 
@@ -8,7 +8,7 @@ export const getWinners = async (
   const response = await fetch(`${BASE_URL}${ApiPath.WINNERS}${generateQueryString(queryParams)}`);
 
   switch (response.status) {
-    case 200: {
+    case HttpStatus.OK: {
       const items: WinnerOptions[] = await response.json();
       const count: number = Number(response.headers.get('X-Total-Count'));
       return { items, count };
@@ -22,9 +22,9 @@ export const getWinner = async (winnerId: number): Promise<WinnerOptions | null>
   const response = await fetch(`${BASE_URL}${ApiPath.WINNERS}/${winnerId}`);
 
   switch (response.status) {
-    case 200:
+    case HttpStatus.OK:
       return await response.json();
-    case 404:
+    case HttpStatus.NOT_FOUND:
       return null;
     default:
       throw new Error(getErrorMessage(response));
@@ -39,7 +39,7 @@ export const createWinner = async (winnerData: WinnerOptions): Promise<WinnerOpt
   });
 
   switch (response.status) {
-    case 201:
+    case HttpStatus.CREATED:
       return await response.json();
     default:
       throw new Error(getErrorMessage(response));
@@ -57,9 +57,9 @@ export const updateWinner = async (
   });
 
   switch (response.status) {
-    case 200:
+    case HttpStatus.OK:
       return await response.json();
-    case 404:
+    case HttpStatus.NOT_FOUND:
       return null;
     default:
       throw new Error(getErrorMessage(response));
@@ -70,8 +70,8 @@ export const deleteWinner = async (winnerId: number): Promise<null> => {
   const response = await fetch(`${BASE_URL}${ApiPath.WINNERS}/${winnerId}`, { method: 'DELETE' });
 
   switch (response.status) {
-    case 200:
-    case 404:
+    case HttpStatus.OK:
+    case HttpStatus.NOT_FOUND:
       return null;
     default:
       throw new Error(getErrorMessage(response));

@@ -28,6 +28,7 @@ import {
   WinnerSortField,
   SortOrder,
   EngineStatus,
+  HttpStatus
 } from '@/types/enums';
 
 export type {
@@ -51,4 +52,4 @@ export type {
   WinnerUIOptions,
   Column,
 };
-export { RoutePath, ApiPath, CarStatus, WinnerSortField, SortOrder, EngineStatus };
+export { RoutePath, ApiPath, CarStatus, WinnerSortField, SortOrder, EngineStatus, HttpStatus };
