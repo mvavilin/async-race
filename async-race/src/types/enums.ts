@@ -26,3 +26,9 @@ export enum SortOrder {
   ASC = 'ASC',
   DESC = 'DESC',
 }
+
+export enum EngineStatus {
+  STARTED = 'started',
+  STOPPED = 'stopped',
+  DRIVE = 'drive',
+}

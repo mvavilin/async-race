@@ -1,4 +1,4 @@
-import { ApiPath, type QueryParam, type EngineResponse } from '@types';
+import { ApiPath, type QueryParam, type EngineResponse, EngineStatus } from '@types';
 import { BASE_URL } from '@/constants';
 import { generateQueryString, getErrorMessage } from '@utils/api';
 
@@ -23,17 +23,17 @@ const setEngineStatus = async (queryParams: QueryParam[] = []): Promise<EngineRe
 export const startEngine = (id: number): Promise<EngineResponse> =>
   setEngineStatus([
     { key: 'id', value: `${id}` },
-    { key: 'status', value: 'started' },
+    { key: 'status', value: EngineStatus.STARTED },
   ]);
 
 export const stopEngine = (id: number): Promise<EngineResponse> =>
   setEngineStatus([
     { key: 'id', value: `${id}` },
-    { key: 'status', value: 'stopped' },
+    { key: 'status', value: EngineStatus.STOPPED },
   ]);
 
 export const driveEngine = (id: number): Promise<EngineResponse> =>
   setEngineStatus([
     { key: 'id', value: `${id}` },
-    { key: 'status', value: 'drive' },
+    { key: 'status', value: EngineStatus.DRIVE },
   ]);
