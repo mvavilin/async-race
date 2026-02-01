@@ -10,7 +10,7 @@ export default class InputBuilder extends ElementBuilder {
     type = 'text',
     placeholder = '',
     disabled = false,
-    event = { type: 'input', handler: () => { } },
+    event = { type: 'input', handler: () => {} },
   }: InputBuilderOptions = {}) {
     super({ tag: 'input', id, classes: ['input', ...classes], event });
 
